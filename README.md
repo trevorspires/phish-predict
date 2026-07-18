@@ -10,8 +10,8 @@ plays ~15 of them on any given night — chosen by a band that famously never
 repeats itself. Songs disappear for 100+ shows and come roaring back
 (**bustouts** ⚡). Tours have rotations. Runs have rules. Every fan walking
 into the lot *knows* tonight's the night for Fluffhead. This project is that
-fan, except it's a gradient-boosted model with 40 years of setlist data and
-no beer. 🍺❌🤖
+fan — except it has actually memorized all 2,100 setlists, and it puts its
+prediction in writing before every show so you can laugh at it after. 🤖📝
 
 Every show day it:
 
