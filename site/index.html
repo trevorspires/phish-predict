@@ -353,10 +353,19 @@
     const L = LOOKS[look], S = SCENES[scene];
     const mt = (0.9 + Math.random() * 1.3).toFixed(2) + "s";
     beams.forEach((b, j) => {
-      b.style.setProperty("--mt", mt);
-      b.style.setProperty("--rot", L.a[j] + "deg");
-      b.style.setProperty("--bc", S.c[j]);
-      b.style.setProperty("--int", L.i[j]);
+      // direct style writes, not CSS-var indirection: Safari doesn't reliably
+      // fire transitions when only a custom property changes
+      b.style.transitionDuration = mt;
+      b.style.transform = "rotate(" + L.a[j] + "deg)";
+      const c = S.c[j], i = L.i[j];
+      const halo = b.querySelector(".halo"), core = b.querySelector(".core"),
+            head = b.querySelector(".head");
+      halo.style.background = "linear-gradient(" + c + " 0%, transparent 82%)";
+      halo.style.opacity = .20 * i;
+      core.style.background = "linear-gradient(" + c + " 0%, " + c + " 10%, transparent 90%)";
+      core.style.opacity = .40 * i;
+      head.style.background = "radial-gradient(circle, #fff 0%, " + c + " 30%, transparent 70%)";
+      head.style.opacity = .85 * i;
     });
     fixtures.forEach((f, j) => f.style.setProperty("--c", S.c[j] || S.c[0]));
     stage.style.setProperty("--p1", S.p[0] + "40");
