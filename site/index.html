@@ -10,11 +10,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0b10; --surface: #12141d; --surface2: #171a25; --edge: #232735;
+    --bg: #08090e; --surface: #12141d; --surface2: #171a25; --edge: #232735;
     --ink: #f2ede3; --ink2: #b3aea3; --ink3: #757b8a;
     --red: #e5484d; --amber: #b8821c; --teal: #1f9a8c; --magenta: #c95bd8;
     --amber-track: #b8821c30;
-    --beam-pink: #ff5ce1; --beam-amber: #ffb84d; --beam-teal: #3fe0cf; --beam-blue: #6da2ff;
+    --beam-pink: #ff4fd8; --beam-amber: #ffae3d; --beam-teal: #2fe8d2; --beam-blue: #5f9dff;
     --slab: "Alfa Slab One", Georgia, serif;
     --sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
     --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -27,58 +27,124 @@
   }
   .wrap { max-width: 940px; margin: 0 auto; position: relative; }
 
-  /* ── the rig: truss + CK5 beams ─────────────────────────── */
-  .truss { position: fixed; top: 0; left: 0; right: 0; height: 10px;
-    background: #05060a; border-bottom: 1px solid #1c2029; z-index: 3;
-    display: flex; justify-content: center; gap: clamp(2rem, 8vw, 7rem);
-    align-items: flex-end; }
-  .fixture { width: 9px; height: 6px; border-radius: 0 0 3px 3px; }
-  .stage { position: absolute; inset: 0 0 auto 0; height: 120vh; overflow: visible;
-    pointer-events: none; z-index: 0; }
-  .beam {
-    position: absolute; top: -30px; left: 50%; width: 190px; height: 115vh;
-    transform-origin: 50% 0;
-    clip-path: polygon(42% 0, 58% 0, 100% 100%, 0 100%);
-    filter: blur(26px); opacity: .16; mix-blend-mode: screen;
+  /* ════ THE RIG ═══════════════════════════════════════════ */
+  .truss {
+    position: fixed; top: 0; left: 0; right: 0; height: 12px; z-index: 5;
+    background: linear-gradient(#04050a, #070810); border-bottom: 1px solid #1c2029;
+    display: flex; justify-content: center; gap: clamp(2rem, 9vw, 8rem);
+    align-items: flex-end;
   }
-  @keyframes sway1 { from { transform: translateX(-50%) rotate(var(--a)); }
-    to { transform: translateX(-50%) rotate(calc(var(--a) + 4deg)); } }
-  .beam { animation: sway1 var(--t, 26s) ease-in-out infinite alternate; }
-  @media (prefers-reduced-motion: reduce) { .beam { animation: none; } }
+  .fixture {
+    width: 11px; height: 7px; border-radius: 0 0 4px 4px; background: var(--c);
+    animation: fixpulse var(--fp, 4s) ease-in-out var(--d, 0s) infinite;
+  }
+  @keyframes fixpulse {
+    0%, 100% { opacity: .65; box-shadow: 0 0 6px var(--c), 0 2px 14px var(--c); }
+    50%      { opacity: 1;   box-shadow: 0 0 14px var(--c), 0 4px 34px var(--c),
+                             0 6px 60px var(--c); }
+  }
 
-  /* ── header ─────────────────────────────────────────────── */
-  header { padding: 4.6rem 0 0; position: relative; z-index: 1; }
+  .stage { position: absolute; inset: 0 0 auto 0; height: 150vh;
+    pointer-events: none; z-index: 0; }
+
+  /* haze — lights need fog to live in */
+  .fog { position: absolute; width: 130vw; height: 60vh; left: -15vw;
+    mix-blend-mode: screen; opacity: .07; filter: blur(60px);
+    background: radial-gradient(closest-side, #8fa3c9, transparent 70%);
+    animation: drift var(--t, 80s) ease-in-out infinite alternate; }
+  .fog.f2 { top: 30vh; --t: 95s; animation-delay: -40s; opacity: .05; }
+  @keyframes drift {
+    from { transform: translateX(-6vw) translateY(-3vh) scale(1); }
+    to   { transform: translateX(6vw) translateY(3vh) scale(1.15); }
+  }
+
+  /* moving-head beams: JS choreography sets --rot / --bc / --int per look.
+     A move eases like a motor repositioning; color changes snap like a gel. */
+  .beam {
+    position: absolute; top: -14px; left: calc(50% + var(--x)); width: 0; height: 132vh;
+    transform-origin: 50% 0; transform: rotate(var(--rot, 0deg));
+    transition: transform var(--mt, 1.4s) cubic-bezier(.65, .02, .25, 1);
+  }
+  .ignitewrap { position: absolute; top: 0; left: 0; width: 0; height: 100%;
+    transform-origin: 50% 0;
+    animation: ignite 1.4s cubic-bezier(.2, .7, .3, 1) var(--d, 0s) backwards; }
+  .halo, .core, .head { position: absolute; left: 50%; transform: translateX(-50%);
+    transform-origin: 50% 0; mix-blend-mode: screen; transition: opacity 1.1s ease; }
+  .halo { width: var(--hw, 250px); height: 100%;
+    background: linear-gradient(var(--bc) 0%, transparent 82%);
+    clip-path: polygon(43% 0, 57% 0, 100% 100%, 0 100%);
+    filter: blur(30px); opacity: calc(.20 * var(--int, 1)); }
+  .core { width: var(--cw, 105px); height: 96%;
+    background: linear-gradient(var(--bc) 0%, var(--bc) 10%, transparent 90%);
+    clip-path: polygon(46.5% 0, 53.5% 0, 88% 100%, 12% 100%);
+    filter: blur(6px); opacity: calc(.40 * var(--int, 1)); }
+  .head { width: 46px; height: 46px; top: -20px; border-radius: 50%;
+    background: radial-gradient(circle, #fff 0%, var(--bc) 30%, transparent 70%);
+    filter: blur(6px); opacity: calc(.85 * var(--int, 1)); }
+  @keyframes ignite {
+    0%   { transform: scaleY(0); opacity: 0; }
+    60%  { transform: scaleY(1.03); }
+    100% { transform: scaleY(1); }
+  }
+
+  /* the lights pool on the stage floor behind the prediction card */
+  .pool { position: absolute; top: 86vh; left: 50%; width: 120vw; height: 36vh;
+    transform: translateX(-50%); mix-blend-mode: screen; filter: blur(55px);
+    background:
+      radial-gradient(38% 90% at 28% 50%, var(--p1, #ff4fd833), transparent 70%),
+      radial-gradient(38% 90% at 50% 40%, var(--p2, #ffae3d2e), transparent 70%),
+      radial-gradient(38% 90% at 72% 50%, var(--p3, #2fe8d233), transparent 70%);
+    transition: background 2s ease; opacity: .9; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .beam { transition: none; }
+    .fixture, .fog, .ignitewrap { animation: none !important; }
+  }
+  @media (max-width: 640px) {
+    .halo { --hw: 170px; filter: blur(22px); }
+    .core { --cw: 70px; }
+    .head { width: 34px; height: 34px; }
+  }
+
+  /* ════ CONTENT ═══════════════════════════════════════════ */
+  header { padding: 4.8rem 0 0; position: relative; z-index: 1; }
   .brand { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
   .donut {
     width: 46px; height: 46px; border-radius: 50%; flex: 0 0 46px;
     border: 13px solid var(--red);
     box-shadow: 0 0 30px #e5484d66, 0 0 70px #e5484d33, inset 0 0 6px #0008;
+    animation: donutglow 5s ease-in-out infinite;
+  }
+  @keyframes donutglow {
+    0%, 100% { box-shadow: 0 0 30px #e5484d66, 0 0 70px #e5484d33, inset 0 0 6px #0008; }
+    50%      { box-shadow: 0 0 44px #e5484d99, 0 0 110px #e5484d4d, inset 0 0 6px #0008; }
   }
   .brand h1 { font: 400 2.5rem/1.1 var(--slab); letter-spacing: .01em;
-    text-shadow: 0 0 40px #ffb84d33; }
+    text-shadow: 0 2px 24px #000c; }
   .brand h1 .accent { color: var(--red); }
-  .tag { color: var(--ink2); max-width: 42rem; margin-top: .95rem; }
+  .tag { color: var(--ink2); max-width: 42rem; margin-top: .95rem;
+    text-shadow: 0 1px 10px #000d; }
   .tag a { color: var(--beam-teal); text-decoration: none;
-    border-bottom: 1px solid #3fe0cf55; }
+    border-bottom: 1px solid #2fe8d255; }
   .tag a:hover { border-bottom-color: var(--beam-teal); }
 
-  /* stat tiles */
   .stats { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: .85rem;
     margin-top: 2rem; position: relative; z-index: 1; }
   .tile {
-    background: var(--surface); border: 1px solid var(--edge); border-radius: 14px;
+    background: #12141dd9; backdrop-filter: blur(6px);
+    border: 1px solid var(--edge); border-radius: 14px;
     padding: 1rem 1.2rem 1.05rem; position: relative; overflow: hidden;
   }
   .tile::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px;
     background: linear-gradient(90deg, var(--beam-pink), var(--beam-amber),
-      var(--beam-teal), var(--beam-blue)); opacity: .8; }
+      var(--beam-teal), var(--beam-blue), var(--beam-pink)); background-size: 200% 100%;
+    animation: chase 8s linear infinite; }
+  @keyframes chase { to { background-position: 200% 0; } }
   .tile .label { font-size: .76rem; color: var(--ink3); letter-spacing: .02em; }
   .tile .value { font-weight: 700; font-size: 1.9rem; line-height: 1.3; margin-top: .2rem; }
-  .tile.hero .value { font-size: 2.9rem; letter-spacing: -.02em;
-    text-shadow: 0 0 30px #ffb84d40; }
+  .tile.hero .value { font-size: 2.9rem; letter-spacing: -.02em; }
   .tile .sub { font-size: .79rem; color: var(--ink3); margin-top: .05rem; }
 
-  /* ── sections ───────────────────────────────────────────── */
   section { margin-top: 3.1rem; position: relative; z-index: 1; }
   .eyebrow { display: flex; align-items: center; gap: .7rem; margin-bottom: 1.05rem; }
   .eyebrow .t { font: 400 1.02rem/1 var(--slab); letter-spacing: .02em; }
@@ -88,9 +154,10 @@
     background: linear-gradient(90deg, var(--edge), transparent); }
 
   .card {
-    background: var(--surface); border: 1px solid var(--edge); border-radius: 18px;
+    background: #12141de6; backdrop-filter: blur(8px);
+    border: 1px solid var(--edge); border-radius: 18px;
     padding: 1.5rem 1.6rem; box-shadow: 0 22px 60px -34px #000e;
-    position: relative; overflow: hidden;
+    position: relative;
   }
 
   .showline { display: flex; justify-content: space-between; align-items: baseline;
@@ -98,7 +165,6 @@
   .venue { font: 400 1.65rem/1.25 var(--slab); }
   .showmeta { color: var(--ink3); font-family: var(--mono); font-size: .8rem; }
 
-  /* setlist shape: each set gets its own light */
   .sets { margin: 1.3rem 0 1.45rem; display: grid; gap: .55rem; }
   .setrow { display: flex; gap: 1rem; padding: .7rem 1rem; align-items: baseline;
     background: var(--surface2); border-radius: 12px; border-left: 4px solid var(--c); }
@@ -107,7 +173,6 @@
   .setsongs { font-size: .95rem; }
   .setsongs .sep { color: var(--c); opacity: .8; padding: 0 .35rem; font-weight: 700; }
 
-  /* prediction table */
   table { width: 100%; border-collapse: collapse; }
   th { text-align: left; font: 600 .7rem/1 var(--sans); letter-spacing: .1em;
     text-transform: uppercase; color: var(--ink3); padding: .45rem .6rem;
@@ -124,7 +189,9 @@
   .meter .track { flex: 1; height: 7px; border-radius: 3.5px;
     background: var(--amber-track); overflow: hidden; }
   .meter .fill { height: 100%; border-radius: 0 3.5px 3.5px 0; min-width: 3px;
-    background: linear-gradient(90deg, var(--amber), #d99b2b); }
+    background: linear-gradient(90deg, var(--amber), #d99b2b);
+    transform-origin: left; animation: meterin .9s cubic-bezier(.2,.7,.3,1) backwards; }
+  @keyframes meterin { from { transform: scaleX(0); } }
   .meter .val { font: 500 .8rem/1 var(--mono); color: var(--ink2); width: 3.3rem;
     text-align: right; font-variant-numeric: tabular-nums; }
   td.gap, th.gap { text-align: right; width: 4.5rem; }
@@ -139,7 +206,6 @@
     user-select: none; width: fit-content; }
   summary:hover { text-decoration: underline; }
 
-  /* ── scorecard: hits as donuts ──────────────────────────── */
   .score-row { display: grid; grid-template-columns: 11.5rem 1fr; gap: .4rem 1.4rem;
     padding: 1.1rem 0; border-bottom: 1px solid #1a1e2b; align-items: start; }
   .score-row:last-child { border-bottom: none; }
@@ -164,7 +230,7 @@
   .loading { color: var(--ink3); font-family: var(--mono); padding: 3rem 0; }
 
   @media (max-width: 640px) {
-    header { padding-top: 3rem; }
+    header { padding-top: 3.2rem; }
     .brand h1 { font-size: 1.65rem; }
     .donut { width: 36px; height: 36px; flex-basis: 36px; border-width: 10px; }
     .stats { grid-template-columns: 1fr 1fr; }
@@ -181,20 +247,82 @@
 </head>
 <body>
 <div class="truss">
-  <span class="fixture" style="background:var(--beam-pink)"></span>
-  <span class="fixture" style="background:var(--beam-amber)"></span>
-  <span class="fixture" style="background:var(--beam-teal)"></span>
-  <span class="fixture" style="background:var(--beam-blue)"></span>
-  <span class="fixture" style="background:var(--beam-amber)"></span>
-  <span class="fixture" style="background:var(--beam-pink)"></span>
+  <span class="fixture" style="--c:var(--beam-pink); --d:.0s; --fp:3.6s"></span>
+  <span class="fixture" style="--c:var(--beam-amber); --d:.6s; --fp:4.4s"></span>
+  <span class="fixture" style="--c:var(--beam-teal); --d:.2s; --fp:3.9s"></span>
+  <span class="fixture" style="--c:var(--beam-blue); --d:.9s; --fp:4.1s"></span>
+  <span class="fixture" style="--c:var(--beam-amber); --d:.4s; --fp:3.7s"></span>
+  <span class="fixture" style="--c:var(--beam-pink); --d:.7s; --fp:4.6s"></span>
 </div>
 <div class="stage" aria-hidden="true">
-  <div class="beam" style="--a:-26deg; --t:31s; background:linear-gradient(var(--beam-pink), transparent 78%)"></div>
-  <div class="beam" style="--a:-12deg; --t:24s; background:linear-gradient(var(--beam-amber), transparent 75%)"></div>
-  <div class="beam" style="--a:1deg;  --t:28s; background:linear-gradient(var(--beam-teal), transparent 78%)"></div>
-  <div class="beam" style="--a:13deg; --t:22s; background:linear-gradient(var(--beam-blue), transparent 75%)"></div>
-  <div class="beam" style="--a:27deg; --t:33s; background:linear-gradient(var(--beam-pink), transparent 78%)"></div>
+  <div class="fog"></div><div class="fog f2"></div>
+  <div class="beam" style="--x:max(-380px,-38vw); --d:.1s"><div class="ignitewrap"><div class="halo"></div><div class="core"></div><div class="head"></div></div></div>
+  <div class="beam" style="--x:max(-220px,-22vw); --d:.4s"><div class="ignitewrap"><div class="halo"></div><div class="core"></div><div class="head"></div></div></div>
+  <div class="beam" style="--x:max(-70px,-7vw);   --d:.2s"><div class="ignitewrap"><div class="halo"></div><div class="core"></div><div class="head"></div></div></div>
+  <div class="beam" style="--x:min(70px,7vw);     --d:.6s"><div class="ignitewrap"><div class="halo"></div><div class="core"></div><div class="head"></div></div></div>
+  <div class="beam" style="--x:min(220px,22vw);   --d:.3s"><div class="ignitewrap"><div class="halo"></div><div class="core"></div><div class="head"></div></div></div>
+  <div class="beam" style="--x:min(380px,38vw);   --d:.8s"><div class="ignitewrap"><div class="halo"></div><div class="core"></div><div class="head"></div></div></div>
+  <div class="pool"></div>
 </div>
+<script>
+/* ── CK5-ish choreography: hold a look, move together, snap colors ── */
+(() => {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const beams = [...document.querySelectorAll(".beam")];
+  const fixtures = [...document.querySelectorAll(".fixture")];
+  const PINK = "#ff4fd8", AMBER = "#ffae3d", TEAL = "#2fe8d2",
+        BLUE = "#5f9dff", PURPLE = "#9d6bff", RED = "#ff5a4f", WHITE = "#e8ecff";
+
+  // looks: six pan angles (deg) + per-beam intensity
+  const LOOKS = [
+    { a: [-38, -24, -9, 9, 24, 38],    i: [1, 1, 1, 1, 1, 1] },        // wide fan
+    { a: [-14, -9, -3, 3, 9, 14],      i: [1, 1, 1, 1, 1, 1] },        // tight fan
+    { a: [30, 19, 8, -8, -19, -30],    i: [1, .8, 1, 1, .8, 1] },      // converge / cross
+    { a: [22, 25, 28, 22, 25, 28],     i: [1, .7, 1, 1, .7, 1] },      // unison tilt right
+    { a: [-28, -25, -22, -28, -25, -22], i: [1, .7, 1, 1, .7, 1] },    // unison tilt left
+    { a: [-34, 18, -10, 10, -18, 34],  i: [1, 1, .85, .85, 1, 1] },    // scissors
+    { a: [0, -2, 2, -2, 2, 0],         i: [.9, 1, .8, .8, 1, .9] },    // straight down wash
+    { a: [-42, -30, 26, -26, 30, 42],  i: [1, .9, 1, 1, .9, 1] },      // split X
+  ];
+  // color scenes: six beam colors + three pool hues
+  const SCENES = [
+    { c: [BLUE, BLUE, BLUE, BLUE, BLUE, BLUE],        p: [BLUE, PURPLE, BLUE] },
+    { c: [PINK, AMBER, PINK, AMBER, PINK, AMBER],     p: [PINK, AMBER, PINK] },
+    { c: [TEAL, TEAL, WHITE, WHITE, TEAL, TEAL],      p: [TEAL, WHITE, TEAL] },
+    { c: [PURPLE, PINK, PURPLE, PURPLE, PINK, PURPLE],p: [PURPLE, PINK, PURPLE] },
+    { c: [AMBER, AMBER, WHITE, WHITE, AMBER, AMBER],  p: [AMBER, WHITE, AMBER] },
+    { c: [RED, PURPLE, RED, RED, PURPLE, RED],        p: [RED, PURPLE, RED] },
+    { c: [PINK, TEAL, BLUE, PURPLE, AMBER, PINK],     p: [PINK, BLUE, AMBER] },
+  ];
+  const stage = document.querySelector(".stage");
+  let look = 0, scene = 0, moves = 0;
+  const pick = (n, not) => { let k; do { k = Math.floor(Math.random() * n); } while (k === not); return k; };
+
+  function apply() {
+    const L = LOOKS[look], S = SCENES[scene];
+    const mt = (0.9 + Math.random() * 1.3).toFixed(2) + "s";
+    beams.forEach((b, j) => {
+      b.style.setProperty("--mt", mt);
+      b.style.setProperty("--rot", L.a[j] + "deg");
+      b.style.setProperty("--bc", S.c[j]);
+      b.style.setProperty("--int", L.i[j]);
+    });
+    fixtures.forEach((f, j) => f.style.setProperty("--c", S.c[j] || S.c[0]));
+    stage.style.setProperty("--p1", S.p[0] + "40");
+    stage.style.setProperty("--p2", S.p[1] + "33");
+    stage.style.setProperty("--p3", S.p[2] + "40");
+  }
+
+  function step() {
+    look = pick(LOOKS.length, look);
+    if (++moves % 2 === 0) scene = pick(SCENES.length, scene);  // color change every other move
+    apply();
+    setTimeout(step, 4500 + Math.random() * 5500);   // hold the look 4.5–10s
+  }
+  apply();
+  setTimeout(step, 2600);   // let the power-on land, then run the show
+})();
+</script>
 <div class="wrap">
   <header>
     <div class="brand"><div class="donut"></div>
@@ -247,12 +375,12 @@ fetch("data.json").then(r => r.json()).then(D => {
   const setRow = (label, songs) => songs && songs.length ?
     `<div class="setrow" style="--c:${SETC[label]}"><span class="setlabel">${label}</span>
      <span class="setsongs">${songs.map(esc).join('<span class="sep">→</span>')}</span></div>` : "";
-  const row = r => `
+  const row = (r, i) => `
     <tr>
       <td class="rank">${r.rank}</td>
       <td class="song">${esc(r.title)}</td>
       <td class="meter-cell"><div class="meter" title="P(played tonight) = ${(r.p * 100).toFixed(1)}%">
-        <div class="track"><div class="fill" style="width:${(r.p / maxP * 100).toFixed(1)}%"></div></div>
+        <div class="track"><div class="fill" style="width:${(r.p / maxP * 100).toFixed(1)}%; animation-delay:${.3 + i * .045}s"></div></div>
         <span class="val">${(r.p * 100).toFixed(1)}%</span>
       </div></td>
       <td class="gap"><span class="gapchip${r.gap >= 40 ? " due" : ""}"
