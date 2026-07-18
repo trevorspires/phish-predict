@@ -2,6 +2,9 @@
 
 > A robot that tries to guess the setlist before Phish plays it. Graded in
 > public, every show, the morning after. 🐟
+>
+> **Live at [phishpredict.com](https://phishpredict.com)** — tonight's
+> prediction and the full scorecard, updated within an hour of every set break.
 
 ## 🔮 What is this?
 
@@ -65,13 +68,26 @@ historical Set 1 / Set 2 / encore tendencies. Slot heads arrange the top
 picks into an actual setlist shape. v3 fits the main head three times with
 different seeds, averages, and blends in the hazard score (weight 0.08).
 
-**🔬 The discipline**: all experimentation happens on a 2022–23 dev window;
-the 2024+ window gets touched once per final candidate. That gate has a body
-count — the 🪦 **graveyard of ideas that looked great on dev and died on the
-holdout**: recency-weighted training, era truncation, days-into-tour and
-NYE/Halloween features, hazard-as-a-feature, song co-occurrence embeddings
-(+.005 dev, −.022 holdout, ouch), a full hyperparameter retune, segue-partner
-boosts, and per-set union ranking. Negative results are results. ⚰️
+**🔬 The discipline**: all experimentation happens on held-back windows;
+the 2024+ final window gets touched once per final candidate. Round two
+upgraded the referee to a 4-fold paired walk-forward harness (`expeval.py`,
+291 shows, per-show deltas, t-stats) plus predictability ceilings
+(`oracle.py`). The oracles ended the project's modeling phase honestly: a
+cheater told the full tour repertoire in advance scores **worse** than the
+model (.221 vs .383 — most songs appear only once per tour, so each song's
+rotation clock beats pool knowledge), and the model is essentially perfectly
+calibrated (it predicts its own recall@20 to within .001). The ceiling is
+the ceiling. 🧗
+
+That gate has a body count — the 🪦 **graveyard of ideas that looked great
+on dev and died on the holdout**: recency-weighted training, era truncation,
+days-into-tour and NYE/Halloween features, hazard-as-a-feature, song
+co-occurrence embeddings (+.005 dev, −.022 holdout, ouch), a full
+hyperparameter retune, segue-partner boosts, per-set union ranking, and —
+round two — a LambdaMART ranker stack (+.005@20, t 1.74) and a
+bustout-re-entry feature (+.004@20, t 1.55), both directionally promising,
+neither statistically real, and their combination a perfect wash (+.0005,
+87 wins / 88 losses). Negative results are results. ⚰️
 
 ## 🤖 The daily agent
 
@@ -98,13 +114,19 @@ python3 baseline.py backtest
 uv run model.py backtest                         # final-window eval (2024+)
 uv run model.py backtest 2022-01-01 2024-01-01   # dev-window eval
 uv run model.py predict 2026-07-18 "Merriweather Post"
+uv run expeval.py --write-base                   # 4-fold paired harness (then plain expeval.py for candidates)
+uv run oracle.py                                 # predictability ceilings
 ```
 
 ## 🗺️ Roadmap
 
-- 🌐 a tiny microsite that posts each night's prediction before the show
-- 🥇 next experiment round: multi-fold paired evaluation, a proper ranking
-  objective (LambdaMART), model stacking, bustout-reentry features
+- ✅ ~~a tiny microsite that posts each night's prediction before the show~~ —
+  live at [phishpredict.com](https://phishpredict.com), republished within an
+  hour of every show ending (`site/`, S3 + CloudFront)
+- ✅ ~~next experiment round: multi-fold paired evaluation, ranking objective,
+  stacking, bustout-reentry features~~ — ran it; the ceiling won (see the
+  graveyard). Two marginal leads (LambdaMART stack, prev_gap) are recorded
+  for a future round with more eval shows
 - 📊 dataset CSVs in the repo, if the Mockingbird Foundation grants
   permission (asked nicely 🙏)
 

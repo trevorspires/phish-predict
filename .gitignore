@@ -7,3 +7,4 @@ predictions/.live-*
 *.log
 .venv/
 __pycache__/
+site/data.json

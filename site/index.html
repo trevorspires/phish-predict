@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>phish-predict 🎸 — tonight's setlist, guessed in advance</title>
+<meta name="description" content="A model that predicts Phish setlists before every show and grades itself in public the morning after.">
+<style>
+  :root {
+    --bg: #0e1116; --card: #171c24; --edge: #232b37; --ink: #e8ecf1;
+    --dim: #97a3b0; --red: #e5484d; --blue: #4f8ef7; --gold: #f5c542;
+    --green: #46a758; --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    padding: 2rem 1rem 4rem;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  header h1 { font-size: 1.9rem; letter-spacing: -.02em; }
+  header h1 .donut { color: var(--red); }
+  header p.tag { color: var(--dim); margin-top: .3rem; }
+  header a { color: var(--blue); text-decoration: none; }
+  .badges { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: .8rem; }
+  .badge {
+    font-family: var(--mono); font-size: .78rem; color: var(--dim);
+    border: 1px solid var(--edge); border-radius: 999px; padding: .18rem .7rem;
+  }
+  .badge b { color: var(--gold); font-weight: 600; }
+  section { margin-top: 2.2rem; }
+  h2 { font-size: 1.15rem; margin-bottom: .8rem; }
+  h2 .em { color: var(--red); }
+  .card {
+    background: var(--card); border: 1px solid var(--edge);
+    border-radius: 14px; padding: 1.2rem 1.3rem;
+  }
+  .showline { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .4rem;
+    align-items: baseline; margin-bottom: .9rem; }
+  .showline .venue { font-size: 1.25rem; font-weight: 650; }
+  .showline .date { color: var(--dim); font-family: var(--mono); font-size: .9rem; }
+  .sets { display: grid; gap: .55rem; margin-bottom: 1.1rem; }
+  .setrow { display: flex; gap: .7rem; align-items: baseline; }
+  .setlabel { flex: 0 0 4.2rem; font-family: var(--mono); font-size: .78rem;
+    color: var(--gold); letter-spacing: .06em; }
+  .setsongs { color: var(--ink); }
+  .setsongs .sep { color: var(--red); padding: 0 .15rem; }
+  details summary { cursor: pointer; color: var(--blue); font-size: .92rem;
+    user-select: none; }
+  table { width: 100%; border-collapse: collapse; margin-top: .8rem;
+    font-size: .92rem; }
+  th { text-align: left; color: var(--dim); font-weight: 500; font-size: .78rem;
+    text-transform: uppercase; letter-spacing: .06em; padding: .3rem .5rem;
+    border-bottom: 1px solid var(--edge); }
+  td { padding: .38rem .5rem; border-bottom: 1px solid var(--edge); }
+  td.num, th.num { text-align: right; font-family: var(--mono); font-size: .85rem; }
+  tr:last-child td { border-bottom: none; }
+  .tablewrap { overflow-x: auto; }
+  .hits { font-family: var(--mono); }
+  .hit-good { color: var(--green); font-weight: 650; }
+  .hit-ok { color: var(--gold); }
+  .hit-meh { color: var(--dim); }
+  .called { color: var(--dim); font-size: .85rem; }
+  .gapchip { font-family: var(--mono); font-size: .78rem; color: var(--dim); }
+  .gapchip.due { color: var(--red); font-weight: 650; }
+  footer { margin-top: 3rem; color: var(--dim); font-size: .84rem;
+    border-top: 1px solid var(--edge); padding-top: 1.2rem; }
+  footer a { color: var(--blue); text-decoration: none; }
+  .loading { color: var(--dim); font-family: var(--mono); padding: 2rem 0; }
+  @media (max-width: 560px) { body { padding: 1.2rem .7rem 3rem; }
+    .setrow { flex-direction: column; gap: .1rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1><span class="donut">●</span> phish-predict</h1>
+    <p class="tag">A model that guesses the setlist before Phish plays it — and grades
+    itself in public the morning after. <a href="https://github.com/trevorspires/phish-predict">Code + methodology →</a></p>
+    <div class="badges" id="badges"></div>
+  </header>
+
+  <div id="app"><p class="loading">loading predictions…</p></div>
+
+  <footer>
+    <p><b>Data courtesy of Phish.net and The Mockingbird Foundation.</b>
+    Audio-archive metadata via <a href="https://phish.in">phish.in</a>.
+    Free &amp; non-commercial; not affiliated with Phish, Phish.net, The Mockingbird
+    Foundation, or phish.in. Predictions are generated before each show from
+    setlist history only — no insider soundcheck intel, we promise.
+    <a href="https://github.com/trevorspires/phish-predict">Source on GitHub</a>.</p>
+  </footer>
+</div>
+
+<script>
+const fmtDate = d => new Date(d + "T12:00:00").toLocaleDateString("en-US",
+  { weekday: "short", month: "short", day: "numeric", year: "numeric" });
+const hitClass = (h, of) => h / of >= .4 ? "hit-good" : h / of >= .25 ? "hit-ok" : "hit-meh";
+
+fetch("data.json").then(r => r.json()).then(D => {
+  document.getElementById("badges").innerHTML =
+    `<span class="badge">backtest recall@20 <b>${D.backtest.r20.toFixed(3)}</b></span>` +
+    `<span class="badge">${D.backtest.window}</span>` +
+    `<span class="badge">updated ${new Date(D.updated).toLocaleString()}</span>`;
+
+  const N = D.next, S = N.setlist || {};
+  const setRow = (label, songs) => songs && songs.length ?
+    `<div class="setrow"><span class="setlabel">${label}</span>
+     <span class="setsongs">${songs.map(s => `<span>${s}</span>`)
+       .join('<span class="sep"> → </span>')}</span></div>` : "";
+
+  const topRows = N.top.slice(0, 20).map(r =>
+    `<tr><td class="num">${r.rank}</td><td>${r.title}</td>
+     <td class="num">${(r.p * 100).toFixed(1)}%</td>
+     <td class="num"><span class="gapchip${r.gap >= 40 ? " due" : ""}">${r.gap}</span></td>
+     <td class="num">${r.last_played}</td></tr>`).join("");
+  const moreRows = N.top.slice(20).map(r =>
+    `<tr><td class="num">${r.rank}</td><td>${r.title}</td>
+     <td class="num">${(r.p * 100).toFixed(1)}%</td>
+     <td class="num"><span class="gapchip${r.gap >= 40 ? " due" : ""}">${r.gap}</span></td>
+     <td class="num">${r.last_played}</td></tr>`).join("");
+
+  const histRows = D.history.map(h =>
+    `<tr><td>${fmtDate(h.date)}</td><td>${h.venue || ""}</td>
+     <td class="num hits"><span class="${hitClass(h.h20, 20)}">${h.h20}</span>/20</td>
+     <td class="num hits">${h.h10}/10 · ${h.h30}/30</td>
+     <td class="called">${h.called.join(", ") || "—"}</td></tr>`).join("");
+
+  document.getElementById("app").innerHTML = `
+    <section>
+      <h2><span class="em">▸</span> Latest prediction</h2>
+      <div class="card">
+        <div class="showline">
+          <span class="venue">${N.venue || "TBA"}</span>
+          <span class="date">${fmtDate(N.date)} · history through ${N.history_through}</span>
+        </div>
+        <div class="sets">
+          ${setRow("SET 1", S.s1)}${setRow("SET 2", S.s2)}${setRow("ENCORE", S.enc)}
+        </div>
+        <div class="tablewrap"><table>
+          <tr><th class="num">#</th><th>song</th><th class="num">p</th>
+              <th class="num">gap</th><th class="num">last played</th></tr>
+          ${topRows}
+        </table></div>
+        ${moreRows ? `<details><summary>show picks 21–40</summary>
+          <div class="tablewrap"><table>${moreRows}</table></div></details>` : ""}
+      </div>
+    </section>
+    <section>
+      <h2><span class="em">▸</span> Scorecard — every show, graded</h2>
+      <div class="card tablewrap"><table>
+        <tr><th>show</th><th>venue</th><th class="num">top-20 hits</th>
+            <th class="num">@10 · @30</th><th>called it</th></tr>
+        ${histRows || "<tr><td colspan=5 class='called'>first scorecard lands after the next show</td></tr>"}
+      </table></div>
+    </section>`;
+}).catch(e => {
+  document.getElementById("app").innerHTML =
+    `<p class="loading">couldn't load data.json — ${e}</p>`;
+});
+</script>
+</body>
+</html>

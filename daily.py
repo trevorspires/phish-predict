@@ -61,7 +61,16 @@ def actual_setlist(date):
     return slugs or None
 
 
-def phishnet_setlist(date):
+def looks_complete(songs):
+    """True if a scraped setlist looks finished (encore up, or clearly long).
+
+    Guards the night runs: a west-coast show is mid-set at 00:45 ET, and a
+    partial setlist must never be scored or supplemented as final.
+    """
+    return any("ENCORE" in s.upper() for s, _ in songs) or len(songs) >= 14
+
+
+def phishnet_setlist(date, require_complete=False):
     """Fallback: song slugs scraped from the phish.net setlist page, or None.
 
     phish.in only adds a show once a recording is uploaded (can lag days);
@@ -73,6 +82,9 @@ def phishnet_setlist(date):
         songs = watch_live.fetch_setlist(f"https://phish.net/setlists/?d={date}")
     except Exception as e:
         print(f"score: phish.net fetch failed for {date}: {e}", flush=True)
+        return None
+    if require_complete and songs and not looks_complete(songs):
+        print(f"score: {date} setlist looks partial, waiting", flush=True)
         return None
     title2slug = {watch_live.norm(r["title"]): r["slug"] for r in
                   csv.DictReader(open(os.path.join(ROOT, "data", "songs.csv")))}
@@ -133,7 +145,9 @@ def supplement_recent():
         if stamp not in final_url:
             continue
         songs = watch_live.fetch_setlist(final_url)
-        if not songs:
+        if not songs or not looks_complete(songs):
+            if songs:
+                print(f"supplement: {date} setlist looks partial, waiting", flush=True)
             continue
         m = re.search(rf"setlists/phish{stamp}([a-z0-9-]+)\.html", final_url)
         venue = resolve_venue(m.group(1) if m else "")
@@ -170,7 +184,7 @@ def score_pending():
     for date in pending:
         actual = actual_setlist(date)
         if not actual and date < today:
-            actual = phishnet_setlist(date)
+            actual = phishnet_setlist(date, require_complete=True)
         if not actual:
             print(f"score: {date} not on phish.in yet", flush=True)
             continue
@@ -238,16 +252,23 @@ def predict_today():
         print("no show today", flush=True)
         return
     date, venue = show
-    if os.path.exists(os.path.join(ROOT, "predictions", f"{date}.json")):
-        print(f"already predicted {date}", flush=True)
-        return
+    latest = max(r["date"] for r in
+                 csv.DictReader(open(os.path.join(ROOT, "data", "shows.csv"))))
+    pj = os.path.join(ROOT, "predictions", f"{date}.json")
+    updated = False
+    if os.path.exists(pj):
+        if json.load(open(pj)).get("history_through", "") >= latest:
+            print(f"already predicted {date} (fresh through {latest})", flush=True)
+            return
+        updated = True   # new setlist data landed since — re-predict
     pred = run_model_predict(date, venue)
     ranked = pred["rankings"]["model"]
     sl = pred.get("setlist", {})
     d = datetime.date.fromisoformat(date).strftime("%b %-d")
     watch = " · ".join(f"{r['title']} (gap {r['gap']})"
                        for r in ranked[:25] if r["gap"] >= 40)[:200]
-    msg = f"🎸 Phish tonight · {pred.get('venue') or venue} · {d}\n"
+    tag = " (updated)" if updated else ""
+    msg = f"🎸 Phish tonight{tag} · {pred.get('venue') or venue} · {d}\n"
     if sl:
         msg += (f"1️⃣ {' · '.join(sl['s1'])}\n"
                 f"2️⃣ {' · '.join(sl['s2'])}\n"
@@ -260,11 +281,22 @@ def predict_today():
     notify(msg)
 
 
+def publish_site():
+    """Rebuild data.json and push the microsite. Non-fatal on failure."""
+    r = subprocess.run([UV, "run", os.path.join("site", "publish_site.py")],
+                       cwd=ROOT, capture_output=True, text=True, timeout=600)
+    if r.returncode == 0:
+        print(f"site: {r.stdout.strip().splitlines()[-1]}", flush=True)
+    else:
+        print(f"site publish failed:\n{r.stderr[-1000:]}", flush=True)
+
+
 def main():
     refresh()
     supplement_recent()
     score_pending()
     predict_today()
+    publish_site()
 
 
 if __name__ == "__main__":

@@ -165,24 +165,34 @@ def make_model(seed=7):
 
 
 def walk(shows, venue, tour, original, slots, cutoff):
-    """Training matrices from shows[TRAIN_SKIP:cutoff] for the 3 slot heads."""
+    """Training matrices from shows[TRAIN_SKIP:cutoff] for the 3 slot heads.
+
+    Also returns `groups`: rows emitted per show, in order — listwise/ranking
+    objectives need per-show query groups.
+    """
     st = State(original)
-    Xs, ys = [], {h: [] for h in HEADS}
+    Xs, ys, groups = [], {h: [] for h in HEADS}, []
     for idx, (date, songs) in enumerate(shows[:cutoff]):
         if idx >= TRAIN_SKIP:
             slugs, X = st.rows(idx, date, venue.get(date, ""), tour.get(date, ""))
             Xs.append(X)
+            groups.append(len(slugs))
             played = set(songs)
             ys["any"].append(np.fromiter((s in played for s in slugs), dtype=np.float32))
             for sl in SLOTS:
                 ys[sl].append(np.fromiter(
                     (sl in slots.get((date, s), ()) for s in slugs), dtype=np.float32))
         st.ingest(idx, songs, venue.get(date, ""), tour.get(date, ""), slots, date)
-    return np.concatenate(Xs), {h: np.concatenate(ys[h]) for h in HEADS}, st
+    return (np.concatenate(Xs), {h: np.concatenate(ys[h]) for h in HEADS}, st,
+            np.array(groups))
 
 
-def fit_heads(X, ys, only=HEADS):
-    """Slot heads are single models; the "any" head is a list, one fit per seed."""
+def fit_heads(X, ys, only=HEADS, groups=None):
+    """Slot heads are single models; the "any" head is a list, one fit per seed.
+
+    `groups` (rows per show) is unused by the GBM heads but part of the
+    contract so ranking-objective variants can consume it.
+    """
     heads = {}
     for h in only:
         if h == "any":
@@ -227,9 +237,9 @@ def backtest(eval_start=EVAL_START, eval_end="9999"):
     venue, tour, original, slots = load_meta()
     eval_cut = next(i for i, (d, _) in enumerate(shows) if d >= eval_start)
     eval_stop = next((i for i, (d, _) in enumerate(shows) if d >= eval_end), len(shows))
-    X, ys, st = walk(shows, venue, tour, original, slots, eval_cut)
+    X, ys, st, groups = walk(shows, venue, tour, original, slots, eval_cut)
     print(f"train: {X.shape[0]:,} rows x {X.shape[1]} features", flush=True)
-    heads = fit_heads(X, ys, only=("any",))
+    heads = fit_heads(X, ys, only=("any",), groups=groups)
     glob, per = baseline.build_hazards(shows, eval_cut)   # frozen at eval cutoff
     r = eval_window(shows, venue, tour, slots, heads, st, eval_cut, eval_stop, glob, per)
     n = eval_stop - eval_cut
@@ -256,8 +266,8 @@ def resolve_venue(name):
 def predict(show_date, venue_hint=""):
     shows = baseline.load_shows()
     venue, tour, original, slots = load_meta()
-    X, ys, st = walk(shows, venue, tour, original, slots, len(shows))
-    heads = fit_heads(X, ys)
+    X, ys, st, groups = walk(shows, venue, tour, original, slots, len(shows))
+    heads = fit_heads(X, ys, groups=groups)
 
     v = resolve_venue(venue_hint)
     last_date = shows[-1][0]
