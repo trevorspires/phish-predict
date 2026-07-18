@@ -1,0 +1,1812 @@
+{
+ "show_date": "2026-07-12",
+ "history_through": "2026-07-11",
+ "venue": "Deer Creek",
+ "n_history_shows": 1973,
+ "rankings": {
+  "model": [
+   {
+    "rank": 1,
+    "slug": "bathtub-gin",
+    "title": "Bathtub Gin",
+    "p": 0.4822,
+    "gap": 10,
+    "last_played": "2026-04-18",
+    "plays": 319
+   },
+   {
+    "rank": 2,
+    "slug": "stash",
+    "title": "Stash",
+    "p": 0.4576,
+    "gap": 9,
+    "last_played": "2026-04-23",
+    "plays": 460
+   },
+   {
+    "rank": 3,
+    "slug": "also-sprach-zarathustra",
+    "title": "Also Sprach Zarathustra",
+    "p": 0.4377,
+    "gap": 12,
+    "last_played": "2026-04-16",
+    "plays": 276
+   },
+   {
+    "rank": 4,
+    "slug": "piper",
+    "title": "Piper",
+    "p": 0.4137,
+    "gap": 8,
+    "last_played": "2026-04-24",
+    "plays": 210
+   },
+   {
+    "rank": 5,
+    "slug": "rift",
+    "title": "Rift",
+    "p": 0.4054,
+    "gap": 12,
+    "last_played": "2026-04-16",
+    "plays": 321
+   },
+   {
+    "rank": 6,
+    "slug": "light",
+    "title": "Light",
+    "p": 0.3793,
+    "gap": 11,
+    "last_played": "2026-04-17",
+    "plays": 135
+   },
+   {
+    "rank": 7,
+    "slug": "split-open-and-melt",
+    "title": "Split Open and Melt",
+    "p": 0.3597,
+    "gap": 12,
+    "last_played": "2026-04-16",
+    "plays": 353
+   },
+   {
+    "rank": 8,
+    "slug": "46-days",
+    "title": "46 Days",
+    "p": 0.3558,
+    "gap": 9,
+    "last_played": "2026-04-23",
+    "plays": 158
+   },
+   {
+    "rank": 9,
+    "slug": "divided-sky",
+    "title": "Divided Sky",
+    "p": 0.3315,
+    "gap": 11,
+    "last_played": "2026-04-17",
+    "plays": 446
+   },
+   {
+    "rank": 10,
+    "slug": "evolve",
+    "title": "Evolve",
+    "p": 0.305,
+    "gap": 12,
+    "last_played": "2026-04-16",
+    "plays": 30
+   },
+   {
+    "rank": 11,
+    "slug": "simple",
+    "title": "Simple",
+    "p": 0.2919,
+    "gap": 10,
+    "last_played": "2026-04-18",
+    "plays": 210
+   },
+   {
+    "rank": 12,
+    "slug": "more",
+    "title": "More",
+    "p": 0.2883,
+    "gap": 9,
+    "last_played": "2026-04-23",
+    "plays": 54
+   },
+   {
+    "rank": 13,
+    "slug": "taste",
+    "title": "Taste",
+    "p": 0.2643,
+    "gap": 4,
+    "last_played": "2026-05-02",
+    "plays": 153
+   },
+   {
+    "rank": 14,
+    "slug": "wilson",
+    "title": "Wilson",
+    "p": 0.261,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 304
+   },
+   {
+    "rank": 15,
+    "slug": "fluffhead",
+    "title": "Fluffhead",
+    "p": 0.2567,
+    "gap": 4,
+    "last_played": "2026-05-02",
+    "plays": 291
+   },
+   {
+    "rank": 16,
+    "slug": "golgi-apparatus",
+    "title": "Golgi Apparatus",
+    "p": 0.2551,
+    "gap": 6,
+    "last_played": "2026-04-30",
+    "plays": 484
+   },
+   {
+    "rank": 17,
+    "slug": "the-lizards",
+    "title": "The Lizards",
+    "p": 0.2486,
+    "gap": 8,
+    "last_played": "2026-04-24",
+    "plays": 335
+   },
+   {
+    "rank": 18,
+    "slug": "mountains-in-the-mist",
+    "title": "Mountains in the Mist",
+    "p": 0.2372,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 49
+   },
+   {
+    "rank": 19,
+    "slug": "birds-of-a-feather",
+    "title": "Birds of a Feather",
+    "p": 0.226,
+    "gap": 11,
+    "last_played": "2026-04-17",
+    "plays": 143
+   },
+   {
+    "rank": 20,
+    "slug": "axilla-part-ii",
+    "title": "Axilla (Part II)",
+    "p": 0.2004,
+    "gap": 7,
+    "last_played": "2026-04-25",
+    "plays": 64
+   },
+   {
+    "rank": 21,
+    "slug": "maze",
+    "title": "Maze",
+    "p": 0.2003,
+    "gap": 9,
+    "last_played": "2026-04-23",
+    "plays": 349
+   },
+   {
+    "rank": 22,
+    "slug": "steam",
+    "title": "Steam",
+    "p": 0.1987,
+    "gap": 12,
+    "last_played": "2026-04-16",
+    "plays": 68
+   },
+   {
+    "rank": 23,
+    "slug": "gumbo",
+    "title": "Gumbo",
+    "p": 0.1939,
+    "gap": 9,
+    "last_played": "2026-04-23",
+    "plays": 127
+   },
+   {
+    "rank": 24,
+    "slug": "bug",
+    "title": "Bug",
+    "p": 0.1929,
+    "gap": 7,
+    "last_played": "2026-04-25",
+    "plays": 101
+   },
+   {
+    "rank": 25,
+    "slug": "walls-of-the-cave",
+    "title": "Walls of the Cave",
+    "p": 0.1888,
+    "gap": 8,
+    "last_played": "2026-04-24",
+    "plays": 81
+   },
+   {
+    "rank": 26,
+    "slug": "ya-mar",
+    "title": "Ya Mar",
+    "p": 0.18,
+    "gap": 8,
+    "last_played": "2026-04-24",
+    "plays": 238
+   },
+   {
+    "rank": 27,
+    "slug": "gotta-jibboo",
+    "title": "Gotta Jibboo",
+    "p": 0.1738,
+    "gap": 12,
+    "last_played": "2026-04-16",
+    "plays": 105
+   },
+   {
+    "rank": 28,
+    "slug": "lonely-trip",
+    "title": "Lonely Trip",
+    "p": 0.1642,
+    "gap": 6,
+    "last_played": "2026-04-30",
+    "plays": 27
+   },
+   {
+    "rank": 29,
+    "slug": "crosseyed-and-painless",
+    "title": "Crosseyed and Painless",
+    "p": 0.1629,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 71
+   },
+   {
+    "rank": 30,
+    "slug": "drift-while-youre-sleeping",
+    "title": "Drift While You're Sleeping",
+    "p": 0.1584,
+    "gap": 6,
+    "last_played": "2026-04-30",
+    "plays": 35
+   },
+   {
+    "rank": 31,
+    "slug": "the-wedge",
+    "title": "The Wedge",
+    "p": 0.1556,
+    "gap": 6,
+    "last_played": "2026-04-30",
+    "plays": 134
+   },
+   {
+    "rank": 32,
+    "slug": "what-s-the-use",
+    "title": "What's the Use?",
+    "p": 0.1537,
+    "gap": 8,
+    "last_played": "2026-04-24",
+    "plays": 74
+   },
+   {
+    "rank": 33,
+    "slug": "beneath-a-sea-of-stars-part-1",
+    "title": "Beneath a Sea of Stars Part 1",
+    "p": 0.1524,
+    "gap": 11,
+    "last_played": "2026-04-17",
+    "plays": 24
+   },
+   {
+    "rank": 34,
+    "slug": "nicu",
+    "title": "NICU",
+    "p": 0.1522,
+    "gap": 6,
+    "last_played": "2026-04-30",
+    "plays": 162
+   },
+   {
+    "rank": 35,
+    "slug": "set-your-soul-free",
+    "title": "Set Your Soul Free",
+    "p": 0.1478,
+    "gap": 8,
+    "last_played": "2026-04-24",
+    "plays": 48
+   },
+   {
+    "rank": 36,
+    "slug": "buried-alive",
+    "title": "Buried Alive",
+    "p": 0.1452,
+    "gap": 10,
+    "last_played": "2026-04-18",
+    "plays": 173
+   },
+   {
+    "rank": 37,
+    "slug": "martian-monster",
+    "title": "Martian Monster",
+    "p": 0.141,
+    "gap": 11,
+    "last_played": "2026-04-17",
+    "plays": 51
+   },
+   {
+    "rank": 38,
+    "slug": "chalk-dust-torture",
+    "title": "Chalk Dust Torture",
+    "p": 0.1368,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 526
+   },
+   {
+    "rank": 39,
+    "slug": "i-am-hydrogen",
+    "title": "I Am Hydrogen",
+    "p": 0.1364,
+    "gap": 11,
+    "last_played": "2026-04-17",
+    "plays": 354
+   },
+   {
+    "rank": 40,
+    "slug": "it-s-ice",
+    "title": "It's Ice",
+    "p": 0.1355,
+    "gap": 8,
+    "last_played": "2026-04-24",
+    "plays": 253
+   },
+   {
+    "rank": 41,
+    "slug": "the-squirming-coil",
+    "title": "The Squirming Coil",
+    "p": 0.1354,
+    "gap": 6,
+    "last_played": "2026-04-30",
+    "plays": 376
+   },
+   {
+    "rank": 42,
+    "slug": "funky-bitch",
+    "title": "Funky Bitch",
+    "p": 0.1338,
+    "gap": 22,
+    "last_played": "2025-09-20",
+    "plays": 245
+   },
+   {
+    "rank": 43,
+    "slug": "mercury",
+    "title": "Mercury",
+    "p": 0.1325,
+    "gap": 7,
+    "last_played": "2026-04-25",
+    "plays": 46
+   },
+   {
+    "rank": 44,
+    "slug": "halley-s-comet",
+    "title": "Halley's Comet",
+    "p": 0.1321,
+    "gap": 7,
+    "last_played": "2026-04-25",
+    "plays": 159
+   },
+   {
+    "rank": 45,
+    "slug": "scents-and-subtle-sounds",
+    "title": "Scents and Subtle Sounds",
+    "p": 0.1284,
+    "gap": 12,
+    "last_played": "2026-04-16",
+    "plays": 49
+   },
+   {
+    "rank": 46,
+    "slug": "meatstick",
+    "title": "Meatstick",
+    "p": 0.1271,
+    "gap": 4,
+    "last_played": "2026-05-02",
+    "plays": 78
+   },
+   {
+    "rank": 47,
+    "slug": "fee",
+    "title": "Fee",
+    "p": 0.1201,
+    "gap": 9,
+    "last_played": "2026-04-23",
+    "plays": 289
+   },
+   {
+    "rank": 48,
+    "slug": "ether-edge",
+    "title": "Ether Edge",
+    "p": 0.1195,
+    "gap": 4,
+    "last_played": "2026-05-02",
+    "plays": 14
+   },
+   {
+    "rank": 49,
+    "slug": "twenty-years-later",
+    "title": "Twenty Years Later",
+    "p": 0.1151,
+    "gap": 12,
+    "last_played": "2026-04-16",
+    "plays": 49
+   },
+   {
+    "rank": 50,
+    "slug": "llama",
+    "title": "Llama",
+    "p": 0.1134,
+    "gap": 4,
+    "last_played": "2026-05-02",
+    "plays": 326
+   },
+   {
+    "rank": 51,
+    "slug": "ghost",
+    "title": "Ghost",
+    "p": 0.1091,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 234
+   },
+   {
+    "rank": 52,
+    "slug": "boogie-on-reggae-woman",
+    "title": "Boogie on Reggae Woman",
+    "p": 0.1085,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 97
+   },
+   {
+    "rank": 53,
+    "slug": "david-bowie",
+    "title": "David Bowie",
+    "p": 0.1046,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 479
+   },
+   {
+    "rank": 54,
+    "slug": "sand",
+    "title": "Sand",
+    "p": 0.1023,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 164
+   },
+   {
+    "rank": 55,
+    "slug": "sample-in-a-jar",
+    "title": "Sample in a Jar",
+    "p": 0.1005,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 314
+   },
+   {
+    "rank": 56,
+    "slug": "my-soul",
+    "title": "My Soul",
+    "p": 0.1001,
+    "gap": 7,
+    "last_played": "2026-04-25",
+    "plays": 109
+   },
+   {
+    "rank": 57,
+    "slug": "a-wave-of-hope",
+    "title": "A Wave of Hope",
+    "p": 0.0916,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 41
+   },
+   {
+    "rank": 58,
+    "slug": "foam",
+    "title": "Foam",
+    "p": 0.0913,
+    "gap": 12,
+    "last_played": "2026-04-16",
+    "plays": 359
+   },
+   {
+    "rank": 59,
+    "slug": "about-to-run",
+    "title": "About to Run",
+    "p": 0.0886,
+    "gap": 7,
+    "last_played": "2026-04-25",
+    "plays": 29
+   },
+   {
+    "rank": 60,
+    "slug": "pebbles-and-marbles",
+    "title": "Pebbles and Marbles",
+    "p": 0.0854,
+    "gap": 8,
+    "last_played": "2026-04-24",
+    "plays": 34
+   },
+   {
+    "rank": 61,
+    "slug": "the-howling",
+    "title": "The Howling",
+    "p": 0.0845,
+    "gap": 25,
+    "last_played": "2025-09-16",
+    "plays": 22
+   },
+   {
+    "rank": 62,
+    "slug": "life-saving-gun",
+    "title": "Life Saving Gun",
+    "p": 0.0795,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 21
+   },
+   {
+    "rank": 63,
+    "slug": "mull",
+    "title": "Mull",
+    "p": 0.0781,
+    "gap": 11,
+    "last_played": "2026-04-17",
+    "plays": 18
+   },
+   {
+    "rank": 64,
+    "slug": "undermind",
+    "title": "Undermind",
+    "p": 0.0732,
+    "gap": 4,
+    "last_played": "2026-05-02",
+    "plays": 64
+   },
+   {
+    "rank": 65,
+    "slug": "pillow-jets",
+    "title": "Pillow Jets",
+    "p": 0.0722,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 16
+   },
+   {
+    "rank": 66,
+    "slug": "moonage-daydream",
+    "title": "Moonage Daydream",
+    "p": 0.0709,
+    "gap": 9,
+    "last_played": "2026-04-23",
+    "plays": 12
+   },
+   {
+    "rank": 67,
+    "slug": "farmhouse",
+    "title": "Farmhouse",
+    "p": 0.0704,
+    "gap": 4,
+    "last_played": "2026-05-02",
+    "plays": 95
+   },
+   {
+    "rank": 68,
+    "slug": "i-didn-t-know",
+    "title": "I Didn't Know",
+    "p": 0.0698,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 265
+   },
+   {
+    "rank": 69,
+    "slug": "a-song-i-heard-the-ocean-sing",
+    "title": "A Song I Heard the Ocean Sing",
+    "p": 0.0669,
+    "gap": 6,
+    "last_played": "2026-04-30",
+    "plays": 52
+   },
+   {
+    "rank": 70,
+    "slug": "ruby-waves",
+    "title": "Ruby Waves",
+    "p": 0.0658,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 43
+   },
+   {
+    "rank": 71,
+    "slug": "scent-of-a-mule",
+    "title": "Scent of a Mule",
+    "p": 0.0647,
+    "gap": 86,
+    "last_played": "2024-08-02",
+    "plays": 138
+   },
+   {
+    "rank": 72,
+    "slug": "shade",
+    "title": "Shade",
+    "p": 0.0627,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 33
+   },
+   {
+    "rank": 73,
+    "slug": "slave-to-the-traffic-light",
+    "title": "Slave to the Traffic Light",
+    "p": 0.0614,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 297
+   },
+   {
+    "rank": 74,
+    "slug": "free",
+    "title": "Free",
+    "p": 0.0608,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 239
+   },
+   {
+    "rank": 75,
+    "slug": "wading-in-the-velvet-sea",
+    "title": "Wading in the Velvet Sea",
+    "p": 0.0608,
+    "gap": 4,
+    "last_played": "2026-05-02",
+    "plays": 111
+   },
+   {
+    "rank": 76,
+    "slug": "sneakin-sally-through-the-alley",
+    "title": "Sneakin' Sally Through the Alley",
+    "p": 0.0606,
+    "gap": 6,
+    "last_played": "2026-04-30",
+    "plays": 86
+   },
+   {
+    "rank": 77,
+    "slug": "character-zero",
+    "title": "Character Zero",
+    "p": 0.0599,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 264
+   },
+   {
+    "rank": 78,
+    "slug": "fuego",
+    "title": "Fuego",
+    "p": 0.0592,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 101
+   },
+   {
+    "rank": 79,
+    "slug": "mike-s-song",
+    "title": "Mike's Song",
+    "p": 0.0568,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 548
+   },
+   {
+    "rank": 80,
+    "slug": "weekapaug-groove",
+    "title": "Weekapaug Groove",
+    "p": 0.055,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 521
+   },
+   {
+    "rank": 81,
+    "slug": "waves",
+    "title": "Waves",
+    "p": 0.054,
+    "gap": 7,
+    "last_played": "2026-04-25",
+    "plays": 58
+   },
+   {
+    "rank": 82,
+    "slug": "the-final-hurrah",
+    "title": "The Final Hurrah",
+    "p": 0.0535,
+    "gap": 7,
+    "last_played": "2026-04-25",
+    "plays": 20
+   },
+   {
+    "rank": 83,
+    "slug": "say-it-to-me-s-a-n-t-o-s",
+    "title": "Say It to Me S.A.N.T.O.S.",
+    "p": 0.053,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 55
+   },
+   {
+    "rank": 84,
+    "slug": "walk-away",
+    "title": "Walk Away",
+    "p": 0.0519,
+    "gap": 10,
+    "last_played": "2026-04-18",
+    "plays": 93
+   },
+   {
+    "rank": 85,
+    "slug": "rock-and-roll",
+    "title": "Rock and Roll",
+    "p": 0.0513,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 97
+   },
+   {
+    "rank": 86,
+    "slug": "ocelot",
+    "title": "Ocelot",
+    "p": 0.049,
+    "gap": 4,
+    "last_played": "2026-05-02",
+    "plays": 103
+   },
+   {
+    "rank": 87,
+    "slug": "brian-and-robert",
+    "title": "Brian and Robert",
+    "p": 0.0486,
+    "gap": 9,
+    "last_played": "2026-04-23",
+    "plays": 56
+   },
+   {
+    "rank": 88,
+    "slug": "vultures",
+    "title": "Vultures",
+    "p": 0.0482,
+    "gap": 8,
+    "last_played": "2026-04-24",
+    "plays": 52
+   },
+   {
+    "rank": 89,
+    "slug": "run-like-an-antelope",
+    "title": "Run Like an Antelope",
+    "p": 0.0469,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 492
+   },
+   {
+    "rank": 90,
+    "slug": "back-on-the-train",
+    "title": "Back on the Train",
+    "p": 0.0464,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 171
+   },
+   {
+    "rank": 91,
+    "slug": "joy",
+    "title": "Joy",
+    "p": 0.0455,
+    "gap": 11,
+    "last_played": "2026-04-17",
+    "plays": 60
+   },
+   {
+    "rank": 92,
+    "slug": "esther",
+    "title": "Esther",
+    "p": 0.0443,
+    "gap": 9,
+    "last_played": "2026-04-23",
+    "plays": 137
+   },
+   {
+    "rank": 93,
+    "slug": "meat",
+    "title": "Meat",
+    "p": 0.0423,
+    "gap": 21,
+    "last_played": "2025-09-21",
+    "plays": 51
+   },
+   {
+    "rank": 94,
+    "slug": "the-well",
+    "title": "The Well",
+    "p": 0.041,
+    "gap": 7,
+    "last_played": "2026-04-25",
+    "plays": 11
+   },
+   {
+    "rank": 95,
+    "slug": "good-times-bad-times",
+    "title": "Good Times Bad Times",
+    "p": 0.0407,
+    "gap": 26,
+    "last_played": "2025-09-14",
+    "plays": 231
+   },
+   {
+    "rank": 96,
+    "slug": "cars-trucks-buses",
+    "title": "Cars Trucks Buses",
+    "p": 0.0384,
+    "gap": 34,
+    "last_played": "2025-07-20",
+    "plays": 89
+   },
+   {
+    "rank": 97,
+    "slug": "the-curtain-with",
+    "title": "The Curtain With",
+    "p": 0.0363,
+    "gap": 9,
+    "last_played": "2026-04-23",
+    "plays": 45
+   },
+   {
+    "rank": 98,
+    "slug": "horn",
+    "title": "Horn",
+    "p": 0.0352,
+    "gap": 7,
+    "last_played": "2026-04-25",
+    "plays": 180
+   },
+   {
+    "rank": 99,
+    "slug": "guyute",
+    "title": "Guyute",
+    "p": 0.0351,
+    "gap": 9,
+    "last_played": "2026-04-23",
+    "plays": 137
+   },
+   {
+    "rank": 100,
+    "slug": "mcgrupp-and-the-watchful-hosemasters",
+    "title": "McGrupp and the Watchful Hosemasters",
+    "p": 0.0351,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 123
+   }
+  ],
+  "baseline": [
+   {
+    "rank": 1,
+    "slug": "ghost",
+    "title": "Ghost",
+    "p": 0.281,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 234
+   },
+   {
+    "rank": 2,
+    "slug": "sand",
+    "title": "Sand",
+    "p": 0.2643,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 164
+   },
+   {
+    "rank": 3,
+    "slug": "chalk-dust-torture",
+    "title": "Chalk Dust Torture",
+    "p": 0.2574,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 526
+   },
+   {
+    "rank": 4,
+    "slug": "character-zero",
+    "title": "Character Zero",
+    "p": 0.2514,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 264
+   },
+   {
+    "rank": 5,
+    "slug": "free",
+    "title": "Free",
+    "p": 0.2134,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 239
+   },
+   {
+    "rank": 6,
+    "slug": "a-wave-of-hope",
+    "title": "A Wave of Hope",
+    "p": 0.2122,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 41
+   },
+   {
+    "rank": 7,
+    "slug": "run-like-an-antelope",
+    "title": "Run Like an Antelope",
+    "p": 0.1922,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 492
+   },
+   {
+    "rank": 8,
+    "slug": "harry-hood",
+    "title": "Harry Hood",
+    "p": 0.1921,
+    "gap": 2,
+    "last_played": "2026-07-08",
+    "plays": 441
+   },
+   {
+    "rank": 9,
+    "slug": "drift-while-youre-sleeping",
+    "title": "Drift While You're Sleeping",
+    "p": 0.1784,
+    "gap": 6,
+    "last_played": "2026-04-30",
+    "plays": 35
+   },
+   {
+    "rank": 10,
+    "slug": "piper",
+    "title": "Piper",
+    "p": 0.1777,
+    "gap": 8,
+    "last_played": "2026-04-24",
+    "plays": 210
+   },
+   {
+    "rank": 11,
+    "slug": "slave-to-the-traffic-light",
+    "title": "Slave to the Traffic Light",
+    "p": 0.1722,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 297
+   },
+   {
+    "rank": 12,
+    "slug": "weekapaug-groove",
+    "title": "Weekapaug Groove",
+    "p": 0.1636,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 521
+   },
+   {
+    "rank": 13,
+    "slug": "mike-s-song",
+    "title": "Mike's Song",
+    "p": 0.1623,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 548
+   },
+   {
+    "rank": 14,
+    "slug": "divided-sky",
+    "title": "Divided Sky",
+    "p": 0.1616,
+    "gap": 11,
+    "last_played": "2026-04-17",
+    "plays": 446
+   },
+   {
+    "rank": 15,
+    "slug": "back-on-the-train",
+    "title": "Back on the Train",
+    "p": 0.1597,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 171
+   },
+   {
+    "rank": 16,
+    "slug": "the-wedge",
+    "title": "The Wedge",
+    "p": 0.1577,
+    "gap": 6,
+    "last_played": "2026-04-30",
+    "plays": 134
+   },
+   {
+    "rank": 17,
+    "slug": "simple",
+    "title": "Simple",
+    "p": 0.1557,
+    "gap": 10,
+    "last_played": "2026-04-18",
+    "plays": 210
+   },
+   {
+    "rank": 18,
+    "slug": "the-well",
+    "title": "The Well",
+    "p": 0.1549,
+    "gap": 7,
+    "last_played": "2026-04-25",
+    "plays": 11
+   },
+   {
+    "rank": 19,
+    "slug": "crosseyed-and-painless",
+    "title": "Crosseyed and Painless",
+    "p": 0.1548,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 71
+   },
+   {
+    "rank": 20,
+    "slug": "ruby-waves",
+    "title": "Ruby Waves",
+    "p": 0.1544,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 43
+   },
+   {
+    "rank": 21,
+    "slug": "more",
+    "title": "More",
+    "p": 0.1541,
+    "gap": 9,
+    "last_played": "2026-04-23",
+    "plays": 54
+   },
+   {
+    "rank": 22,
+    "slug": "david-bowie",
+    "title": "David Bowie",
+    "p": 0.1533,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 479
+   },
+   {
+    "rank": 23,
+    "slug": "ether-edge",
+    "title": "Ether Edge",
+    "p": 0.151,
+    "gap": 4,
+    "last_played": "2026-05-02",
+    "plays": 14
+   },
+   {
+    "rank": 24,
+    "slug": "the-squirming-coil",
+    "title": "The Squirming Coil",
+    "p": 0.1506,
+    "gap": 6,
+    "last_played": "2026-04-30",
+    "plays": 376
+   },
+   {
+    "rank": 25,
+    "slug": "wilson",
+    "title": "Wilson",
+    "p": 0.1499,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 304
+   },
+   {
+    "rank": 26,
+    "slug": "a-song-i-heard-the-ocean-sing",
+    "title": "A Song I Heard the Ocean Sing",
+    "p": 0.147,
+    "gap": 6,
+    "last_played": "2026-04-30",
+    "plays": 52
+   },
+   {
+    "rank": 27,
+    "slug": "stealing-time-from-the-faulty-plan",
+    "title": "Stealing Time From the Faulty Plan",
+    "p": 0.1461,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 83
+   },
+   {
+    "rank": 28,
+    "slug": "no-men-in-no-mans-land",
+    "title": "No Men in No Man's Land",
+    "p": 0.1431,
+    "gap": 2,
+    "last_played": "2026-07-08",
+    "plays": 88
+   },
+   {
+    "rank": 29,
+    "slug": "ocelot",
+    "title": "Ocelot",
+    "p": 0.1408,
+    "gap": 4,
+    "last_played": "2026-05-02",
+    "plays": 103
+   },
+   {
+    "rank": 30,
+    "slug": "say-it-to-me-s-a-n-t-o-s",
+    "title": "Say It to Me S.A.N.T.O.S.",
+    "p": 0.14,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 55
+   },
+   {
+    "rank": 31,
+    "slug": "axilla-part-ii",
+    "title": "Axilla (Part II)",
+    "p": 0.1394,
+    "gap": 7,
+    "last_played": "2026-04-25",
+    "plays": 64
+   },
+   {
+    "rank": 32,
+    "slug": "set-your-soul-free",
+    "title": "Set Your Soul Free",
+    "p": 0.1381,
+    "gap": 8,
+    "last_played": "2026-04-24",
+    "plays": 48
+   },
+   {
+    "rank": 33,
+    "slug": "the-lizards",
+    "title": "The Lizards",
+    "p": 0.1378,
+    "gap": 8,
+    "last_played": "2026-04-24",
+    "plays": 335
+   },
+   {
+    "rank": 34,
+    "slug": "nicu",
+    "title": "NICU",
+    "p": 0.136,
+    "gap": 6,
+    "last_played": "2026-04-30",
+    "plays": 162
+   },
+   {
+    "rank": 35,
+    "slug": "birds-of-a-feather",
+    "title": "Birds of a Feather",
+    "p": 0.1337,
+    "gap": 11,
+    "last_played": "2026-04-17",
+    "plays": 143
+   },
+   {
+    "rank": 36,
+    "slug": "stash",
+    "title": "Stash",
+    "p": 0.1331,
+    "gap": 9,
+    "last_played": "2026-04-23",
+    "plays": 460
+   },
+   {
+    "rank": 37,
+    "slug": "pillow-jets",
+    "title": "Pillow Jets",
+    "p": 0.1329,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 16
+   },
+   {
+    "rank": 38,
+    "slug": "wingsuit",
+    "title": "Wingsuit",
+    "p": 0.1324,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 43
+   },
+   {
+    "rank": 39,
+    "slug": "suzy-greenberg",
+    "title": "Suzy Greenberg",
+    "p": 0.1304,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 456
+   },
+   {
+    "rank": 40,
+    "slug": "fuego",
+    "title": "Fuego",
+    "p": 0.1297,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 101
+   },
+   {
+    "rank": 41,
+    "slug": "twist",
+    "title": "Twist",
+    "p": 0.129,
+    "gap": 2,
+    "last_played": "2026-07-08",
+    "plays": 191
+   },
+   {
+    "rank": 42,
+    "slug": "possum",
+    "title": "Possum",
+    "p": 0.1289,
+    "gap": 2,
+    "last_played": "2026-07-08",
+    "plays": 580
+   },
+   {
+    "rank": 43,
+    "slug": "mound",
+    "title": "Mound",
+    "p": 0.1287,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 120
+   },
+   {
+    "rank": 44,
+    "slug": "undermind",
+    "title": "Undermind",
+    "p": 0.1285,
+    "gap": 4,
+    "last_played": "2026-05-02",
+    "plays": 64
+   },
+   {
+    "rank": 45,
+    "slug": "about-to-run",
+    "title": "About to Run",
+    "p": 0.1282,
+    "gap": 7,
+    "last_played": "2026-04-25",
+    "plays": 29
+   },
+   {
+    "rank": 46,
+    "slug": "sneakin-sally-through-the-alley",
+    "title": "Sneakin' Sally Through the Alley",
+    "p": 0.1277,
+    "gap": 6,
+    "last_played": "2026-04-30",
+    "plays": 86
+   },
+   {
+    "rank": 47,
+    "slug": "what-s-the-use",
+    "title": "What's the Use?",
+    "p": 0.1271,
+    "gap": 8,
+    "last_played": "2026-04-24",
+    "plays": 74
+   },
+   {
+    "rank": 48,
+    "slug": "frankenstein",
+    "title": "Frankenstein",
+    "p": 0.1269,
+    "gap": 4,
+    "last_played": "2026-05-02",
+    "plays": 93
+   },
+   {
+    "rank": 49,
+    "slug": "silent-in-the-morning",
+    "title": "Silent in the Morning",
+    "p": 0.1267,
+    "gap": 4,
+    "last_played": "2026-05-02",
+    "plays": 189
+   },
+   {
+    "rank": 50,
+    "slug": "life-saving-gun",
+    "title": "Life Saving Gun",
+    "p": 0.1263,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 21
+   },
+   {
+    "rank": 51,
+    "slug": "fluffhead",
+    "title": "Fluffhead",
+    "p": 0.1251,
+    "gap": 4,
+    "last_played": "2026-05-02",
+    "plays": 291
+   },
+   {
+    "rank": 52,
+    "slug": "bug",
+    "title": "Bug",
+    "p": 0.125,
+    "gap": 7,
+    "last_played": "2026-04-25",
+    "plays": 101
+   },
+   {
+    "rank": 53,
+    "slug": "the-moma-dance",
+    "title": "The Moma Dance",
+    "p": 0.1248,
+    "gap": 2,
+    "last_played": "2026-07-08",
+    "plays": 214
+   },
+   {
+    "rank": 54,
+    "slug": "46-days",
+    "title": "46 Days",
+    "p": 0.1246,
+    "gap": 9,
+    "last_played": "2026-04-23",
+    "plays": 158
+   },
+   {
+    "rank": 55,
+    "slug": "the-horse",
+    "title": "The Horse",
+    "p": 0.1241,
+    "gap": 4,
+    "last_played": "2026-05-02",
+    "plays": 174
+   },
+   {
+    "rank": 56,
+    "slug": "rock-and-roll",
+    "title": "Rock and Roll",
+    "p": 0.1241,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 97
+   },
+   {
+    "rank": 57,
+    "slug": "boogie-on-reggae-woman",
+    "title": "Boogie on Reggae Woman",
+    "p": 0.1239,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 97
+   },
+   {
+    "rank": 58,
+    "slug": "tela",
+    "title": "Tela",
+    "p": 0.1208,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 93
+   },
+   {
+    "rank": 59,
+    "slug": "heavy-things",
+    "title": "Heavy Things",
+    "p": 0.1204,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 102
+   },
+   {
+    "rank": 60,
+    "slug": "maze",
+    "title": "Maze",
+    "p": 0.1199,
+    "gap": 9,
+    "last_played": "2026-04-23",
+    "plays": 349
+   },
+   {
+    "rank": 61,
+    "slug": "pebbles-and-marbles",
+    "title": "Pebbles and Marbles",
+    "p": 0.1193,
+    "gap": 8,
+    "last_played": "2026-04-24",
+    "plays": 34
+   },
+   {
+    "rank": 62,
+    "slug": "farmhouse",
+    "title": "Farmhouse",
+    "p": 0.1181,
+    "gap": 4,
+    "last_played": "2026-05-02",
+    "plays": 95
+   },
+   {
+    "rank": 63,
+    "slug": "lonely-trip",
+    "title": "Lonely Trip",
+    "p": 0.1174,
+    "gap": 6,
+    "last_played": "2026-04-30",
+    "plays": 27
+   },
+   {
+    "rank": 64,
+    "slug": "the-sloth",
+    "title": "The Sloth",
+    "p": 0.1172,
+    "gap": 6,
+    "last_played": "2026-04-30",
+    "plays": 176
+   },
+   {
+    "rank": 65,
+    "slug": "golgi-apparatus",
+    "title": "Golgi Apparatus",
+    "p": 0.1171,
+    "gap": 6,
+    "last_played": "2026-04-30",
+    "plays": 484
+   },
+   {
+    "rank": 66,
+    "slug": "the-curtain-with",
+    "title": "The Curtain With",
+    "p": 0.1168,
+    "gap": 9,
+    "last_played": "2026-04-23",
+    "plays": 45
+   },
+   {
+    "rank": 67,
+    "slug": "seven-below",
+    "title": "Seven Below",
+    "p": 0.1167,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 52
+   },
+   {
+    "rank": 68,
+    "slug": "avenu-malkenu",
+    "title": "Avenu Malkenu",
+    "p": 0.1166,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 85
+   },
+   {
+    "rank": 69,
+    "slug": "waves",
+    "title": "Waves",
+    "p": 0.1162,
+    "gap": 7,
+    "last_played": "2026-04-25",
+    "plays": 58
+   },
+   {
+    "rank": 70,
+    "slug": "i-didn-t-know",
+    "title": "I Didn't Know",
+    "p": 0.1159,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 265
+   },
+   {
+    "rank": 71,
+    "slug": "the-final-hurrah",
+    "title": "The Final Hurrah",
+    "p": 0.1159,
+    "gap": 7,
+    "last_played": "2026-04-25",
+    "plays": 20
+   },
+   {
+    "rank": 72,
+    "slug": "my-soul",
+    "title": "My Soul",
+    "p": 0.1154,
+    "gap": 7,
+    "last_played": "2026-04-25",
+    "plays": 109
+   },
+   {
+    "rank": 73,
+    "slug": "it-s-ice",
+    "title": "It's Ice",
+    "p": 0.1142,
+    "gap": 8,
+    "last_played": "2026-04-24",
+    "plays": 253
+   },
+   {
+    "rank": 74,
+    "slug": "mcgrupp-and-the-watchful-hosemasters",
+    "title": "McGrupp and the Watchful Hosemasters",
+    "p": 0.1115,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 123
+   },
+   {
+    "rank": 75,
+    "slug": "horn",
+    "title": "Horn",
+    "p": 0.1106,
+    "gap": 7,
+    "last_played": "2026-04-25",
+    "plays": 180
+   },
+   {
+    "rank": 76,
+    "slug": "sample-in-a-jar",
+    "title": "Sample in a Jar",
+    "p": 0.1102,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 314
+   },
+   {
+    "rank": 77,
+    "slug": "the-man-who-stepped-into-yesterday",
+    "title": "The Man Who Stepped Into Yesterday",
+    "p": 0.1101,
+    "gap": 3,
+    "last_played": "2026-07-07",
+    "plays": 87
+   },
+   {
+    "rank": 78,
+    "slug": "halley-s-comet",
+    "title": "Halley's Comet",
+    "p": 0.1094,
+    "gap": 7,
+    "last_played": "2026-04-25",
+    "plays": 159
+   },
+   {
+    "rank": 79,
+    "slug": "scents-and-subtle-sounds",
+    "title": "Scents and Subtle Sounds",
+    "p": 0.1092,
+    "gap": 12,
+    "last_played": "2026-04-16",
+    "plays": 49
+   },
+   {
+    "rank": 80,
+    "slug": "halfway-to-the-moon",
+    "title": "Halfway to the Moon",
+    "p": 0.1084,
+    "gap": 6,
+    "last_played": "2026-04-30",
+    "plays": 56
+   },
+   {
+    "rank": 81,
+    "slug": "shade",
+    "title": "Shade",
+    "p": 0.1082,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 33
+   },
+   {
+    "rank": 82,
+    "slug": "wading-in-the-velvet-sea",
+    "title": "Wading in the Velvet Sea",
+    "p": 0.1079,
+    "gap": 4,
+    "last_played": "2026-05-02",
+    "plays": 111
+   },
+   {
+    "rank": 83,
+    "slug": "billy-breathes",
+    "title": "Billy Breathes",
+    "p": 0.1077,
+    "gap": 8,
+    "last_played": "2026-04-24",
+    "plays": 67
+   },
+   {
+    "rank": 84,
+    "slug": "gumbo",
+    "title": "Gumbo",
+    "p": 0.106,
+    "gap": 9,
+    "last_played": "2026-04-23",
+    "plays": 127
+   },
+   {
+    "rank": 85,
+    "slug": "llama",
+    "title": "Llama",
+    "p": 0.1048,
+    "gap": 4,
+    "last_played": "2026-05-02",
+    "plays": 326
+   },
+   {
+    "rank": 86,
+    "slug": "meatstick",
+    "title": "Meatstick",
+    "p": 0.1046,
+    "gap": 4,
+    "last_played": "2026-05-02",
+    "plays": 78
+   },
+   {
+    "rank": 87,
+    "slug": "mercury",
+    "title": "Mercury",
+    "p": 0.1041,
+    "gap": 7,
+    "last_played": "2026-04-25",
+    "plays": 46
+   },
+   {
+    "rank": 88,
+    "slug": "saw-it-again",
+    "title": "Saw It Again",
+    "p": 0.1026,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 50
+   },
+   {
+    "rank": 89,
+    "slug": "tube",
+    "title": "Tube",
+    "p": 0.101,
+    "gap": 1,
+    "last_played": "2026-07-10",
+    "plays": 204
+   },
+   {
+    "rank": 90,
+    "slug": "walls-of-the-cave",
+    "title": "Walls of the Cave",
+    "p": 0.0992,
+    "gap": 8,
+    "last_played": "2026-04-24",
+    "plays": 81
+   },
+   {
+    "rank": 91,
+    "slug": "kill-devil-falls",
+    "title": "Kill Devil Falls",
+    "p": 0.0991,
+    "gap": 2,
+    "last_played": "2026-07-08",
+    "plays": 126
+   },
+   {
+    "rank": 92,
+    "slug": "the-dogs",
+    "title": "The Dogs",
+    "p": 0.098,
+    "gap": 8,
+    "last_played": "2026-04-24",
+    "plays": 19
+   },
+   {
+    "rank": 93,
+    "slug": "first-tube",
+    "title": "First Tube",
+    "p": 0.0974,
+    "gap": 2,
+    "last_played": "2026-07-08",
+    "plays": 146
+   },
+   {
+    "rank": 94,
+    "slug": "blaze-on",
+    "title": "Blaze On",
+    "p": 0.0973,
+    "gap": 1,
+    "last_played": "2026-07-10",
+    "plays": 99
+   },
+   {
+    "rank": 95,
+    "slug": "wolfman-s-brother",
+    "title": "Wolfman's Brother",
+    "p": 0.0952,
+    "gap": 1,
+    "last_played": "2026-07-10",
+    "plays": 252
+   },
+   {
+    "rank": 96,
+    "slug": "guyute",
+    "title": "Guyute",
+    "p": 0.0948,
+    "gap": 9,
+    "last_played": "2026-04-23",
+    "plays": 137
+   },
+   {
+    "rank": 97,
+    "slug": "vultures",
+    "title": "Vultures",
+    "p": 0.094,
+    "gap": 8,
+    "last_played": "2026-04-24",
+    "plays": 52
+   },
+   {
+    "rank": 98,
+    "slug": "mountains-in-the-mist",
+    "title": "Mountains in the Mist",
+    "p": 0.0937,
+    "gap": 5,
+    "last_played": "2026-05-01",
+    "plays": 49
+   },
+   {
+    "rank": 99,
+    "slug": "split-open-and-melt",
+    "title": "Split Open and Melt",
+    "p": 0.0925,
+    "gap": 12,
+    "last_played": "2026-04-16",
+    "plays": 353
+   },
+   {
+    "rank": 100,
+    "slug": "brian-and-robert",
+    "title": "Brian and Robert",
+    "p": 0.0918,
+    "gap": 9,
+    "last_played": "2026-04-23",
+    "plays": 56
+   }
+  ]
+ }
+}

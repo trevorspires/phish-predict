@@ -1,0 +1,9 @@
+# The dataset is NOT redistributed with this repo (see README → Data & licensing).
+# Rebuild it locally: python3 fetch.py && python3 build_dataset.py
+data/
+
+# live-tracker state, logs, envs
+predictions/.live-*
+*.log
+.venv/
+__pycache__/
