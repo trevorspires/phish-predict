@@ -142,8 +142,24 @@
   @keyframes chase { to { background-position: 200% 0; } }
   .tile .label { font-size: .76rem; color: var(--ink3); letter-spacing: .02em; }
   .tile .value { font-weight: 700; font-size: 1.9rem; line-height: 1.3; margin-top: .2rem; }
-  .tile.hero .value { font-size: 2.9rem; letter-spacing: -.02em; }
   .tile .sub { font-size: .79rem; color: var(--ink3); margin-top: .05rem; }
+
+  /* the matchup: model vs band */
+  .vs { display: flex; justify-content: space-between; align-items: baseline;
+    margin-top: .45rem; gap: .8rem; }
+  .side { display: flex; gap: .55rem; align-items: baseline; }
+  .side.band { flex-direction: row-reverse; }
+  .who { font-size: .8rem; color: var(--ink2); white-space: nowrap; }
+  .who::before { content: ""; display: inline-block; width: 9px; height: 9px;
+    border-radius: 50%; margin-right: .4rem; vertical-align: 1px; }
+  .side.model .who::before { background: var(--amber); }
+  .side.band .who::before { background: var(--red); margin-right: 0; margin-left: .4rem; }
+  .side.band .who { direction: rtl; }
+  .pct { font: 400 2.45rem/1 var(--slab); letter-spacing: -.01em; }
+  .vsmid { font: 400 .95rem/1 var(--slab); color: var(--ink3); align-self: center; }
+  .vsbar { display: flex; gap: 2px; height: 10px; margin: .6rem 0 .6rem; }
+  .vsbar .m { background: var(--amber); border-radius: 5px 0 0 5px; }
+  .vsbar .b { background: var(--red); border-radius: 0 5px 5px 0; }
 
   section { margin-top: 3.1rem; position: relative; z-index: 1; }
   .eyebrow { display: flex; align-items: center; gap: .7rem; margin-bottom: 1.05rem; }
@@ -291,12 +307,12 @@
 </div>
 <div class="stage" aria-hidden="true">
   <div class="fog"></div><div class="fog f2"></div>
-  <div class="beam" style="--x:max(-380px,-38vw); --d:.1s"><div class="ignitewrap"><div class="halo"></div><div class="core"></div><div class="head"></div></div></div>
-  <div class="beam" style="--x:max(-220px,-22vw); --d:.4s"><div class="ignitewrap"><div class="halo"></div><div class="core"></div><div class="head"></div></div></div>
-  <div class="beam" style="--x:max(-70px,-7vw);   --d:.2s"><div class="ignitewrap"><div class="halo"></div><div class="core"></div><div class="head"></div></div></div>
-  <div class="beam" style="--x:min(70px,7vw);     --d:.6s"><div class="ignitewrap"><div class="halo"></div><div class="core"></div><div class="head"></div></div></div>
-  <div class="beam" style="--x:min(220px,22vw);   --d:.3s"><div class="ignitewrap"><div class="halo"></div><div class="core"></div><div class="head"></div></div></div>
-  <div class="beam" style="--x:min(380px,38vw);   --d:.8s"><div class="ignitewrap"><div class="halo"></div><div class="core"></div><div class="head"></div></div></div>
+  <div class="beam" style="--x:max(-380px,-38vw); --d:.1s; --rot:-38deg; --bc:var(--beam-pink)"><div class="ignitewrap"><div class="halo"></div><div class="core"></div><div class="head"></div></div></div>
+  <div class="beam" style="--x:max(-220px,-22vw); --d:.4s; --rot:-24deg; --bc:var(--beam-amber)"><div class="ignitewrap"><div class="halo"></div><div class="core"></div><div class="head"></div></div></div>
+  <div class="beam" style="--x:max(-70px,-7vw);   --d:.2s; --rot:-9deg;  --bc:var(--beam-teal)"><div class="ignitewrap"><div class="halo"></div><div class="core"></div><div class="head"></div></div></div>
+  <div class="beam" style="--x:min(70px,7vw);     --d:.6s; --rot:9deg;   --bc:var(--beam-blue)"><div class="ignitewrap"><div class="halo"></div><div class="core"></div><div class="head"></div></div></div>
+  <div class="beam" style="--x:min(220px,22vw);   --d:.3s; --rot:24deg;  --bc:var(--beam-amber)"><div class="ignitewrap"><div class="halo"></div><div class="core"></div><div class="head"></div></div></div>
+  <div class="beam" style="--x:min(380px,38vw);   --d:.8s; --rot:38deg;  --bc:var(--beam-pink)"><div class="ignitewrap"><div class="halo"></div><div class="core"></div><div class="head"></div></div></div>
   <div class="pool"></div>
 </div>
 <script>
@@ -388,13 +404,18 @@ const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;");
 
 fetch("data.json").then(r => r.json()).then(D => {
   const best = D.history.reduce((m, h) => h.h20 > (m?.h20 ?? -1) ? h : m, null);
+  const mPct = Math.round(D.backtest.r20 * 100), bPct = 100 - mPct;
   document.getElementById("stats").innerHTML = `
     <div class="tile hero">
-      <div class="label">of every night is pure surprise</div>
-      <div class="value">${Math.round((1 - D.backtest.r20) * 100)}%</div>
-      <div class="sub">a machine that memorized all 2,100 setlists still only calls
-        ${Math.round(D.backtest.r20 * 100)}% of a night in its top-20 picks
-        (${esc(D.backtest.window)}) · the rest is the band</div>
+      <div class="label">every night is a matchup</div>
+      <div class="vs">
+        <div class="side model"><span class="who">the model</span><span class="pct">${mPct}%</span></div>
+        <span class="vsmid">vs</span>
+        <div class="side band"><span class="who">the band</span><span class="pct">${bPct}%</span></div>
+      </div>
+      <div class="vsbar"><span class="m" style="width:${mPct}%"></span><span class="b" style="width:${bPct}%"></span></div>
+      <div class="sub">the model calls ${mPct}% of an average setlist in its top-20
+        picks; the other ${bPct}% stays pure surprise (${esc(D.backtest.window)})</div>
     </div>
     <div class="tile">
       <div class="label">shows graded live</div>
