@@ -363,8 +363,9 @@
     <div class="brand"><div class="donut"></div>
       <h1>phish<span class="accent">-</span>predict</h1></div>
     <p class="tag">A model that guesses the setlist before Phish plays it, then grades
-    itself in public the morning after. Trained on 40 years of shows; wrong in
-    interesting ways. <a href="https://github.com/trevorspires/phish-predict">Code&nbsp;&amp;&nbsp;methodology</a></p>
+    itself in public the morning after. It memorized 40 years of shows and still loses
+    most nights — which is exactly what makes this band this band. Wrong in
+    interesting ways. <a href="https://github.com/trevorspires/phish-predict">How it works</a></p>
     <div class="stats" id="stats"></div>
   </header>
 
@@ -389,9 +390,11 @@ fetch("data.json").then(r => r.json()).then(D => {
   const best = D.history.reduce((m, h) => h.h20 > (m?.h20 ?? -1) ? h : m, null);
   document.getElementById("stats").innerHTML = `
     <div class="tile hero">
-      <div class="label">backtest recall@20 · frozen walk-forward</div>
-      <div class="value">${D.backtest.r20.toFixed(3)}</div>
-      <div class="sub">${esc(D.backtest.window)} · baseline 0.273</div>
+      <div class="label">of every night is pure surprise</div>
+      <div class="value">${Math.round((1 - D.backtest.r20) * 100)}%</div>
+      <div class="sub">a machine that memorized all 2,100 setlists still only calls
+        ${Math.round(D.backtest.r20 * 100)}% of a night in its top-20 picks
+        (${esc(D.backtest.window)}) · the rest is the band</div>
     </div>
     <div class="tile">
       <div class="label">shows graded live</div>
@@ -414,7 +417,7 @@ fetch("data.json").then(r => r.json()).then(D => {
     <tr>
       <td class="rank">${r.rank}</td>
       <td class="song">${esc(r.title)}</td>
-      <td class="meter-cell"><div class="meter" title="P(played tonight) = ${(r.p * 100).toFixed(1)}%">
+      <td class="meter-cell"><div class="meter" title="${(r.p * 100).toFixed(1)}% chance they play it tonight">
         <div class="track"><div class="fill" style="width:${(r.p / maxP * 100).toFixed(1)}%; animation-delay:${.3 + i * .045}s"></div></div>
         <span class="val">${(r.p * 100).toFixed(1)}%</span>
       </div></td>
@@ -434,7 +437,7 @@ fetch("data.json").then(r => r.json()).then(D => {
             ${Array.from({length: 20}, (_, i) =>
               `<span class="dn ${i < h.h20 ? "hit" : "miss"}"></span>`).join("")}
           </div>
-          <span class="kdetail">@10: ${h.h10} · @30: ${h.h30}${h.b20 != null ? " · baseline: " + h.b20 : ""}</span>
+          <span class="kdetail">top 10: ${h.h10} · top 30: ${h.h30}${h.b20 != null ? " · basic stats: " + h.b20 : ""}</span>
         </div>
         <div class="called"><b>Called</b>${h.called.map(esc).join(", ") || "none in the top 20"}</div>
       </div>
@@ -446,13 +449,13 @@ fetch("data.json").then(r => r.json()).then(D => {
       <div class="card">
         <div class="showline">
           <span class="venue">${esc(N.venue || "TBA")}</span>
-          <span class="showmeta">${fmtDate(N.date)} · history through ${N.history_through}</span>
+          <span class="showmeta">${fmtDate(N.date)} · knows every show through ${fmtDate(N.history_through)}</span>
         </div>
         <div class="sets">
           ${setRow("SET 1", S.s1)}${setRow("SET 2", S.s2)}${setRow("ENCORE", S.enc)}
         </div>
         <table>
-          <thead><tr><th class="rank">#</th><th>Song</th><th class="meter-cell">P(played tonight)</th>
+          <thead><tr><th class="rank">#</th><th>Song</th><th class="meter-cell">Chance they play it</th>
           <th class="gap">Gap</th><th class="last">Last played</th></tr></thead>
           <tbody>${N.top.slice(0, 20).map(row).join("")}</tbody>
         </table>
