@@ -7,88 +7,112 @@
 <meta name="description" content="A model that predicts Phish setlists before every show and grades itself in public the morning after.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0d0f14; --surface: #151921; --surface2: #1b202b; --edge: #262d3a;
-    --ink: #edf0f4; --ink2: #a8b1bd; --ink3: #6e7887;
-    --red: #e5484d; --blue: #4f8ef7; --amber: #b8821c; --amber-track: #b8821c33;
-    --blue-track: #4f8ef72e; --green: #46a758;
-    --serif: "Fraunces", Georgia, serif;
+    --bg: #0a0b10; --surface: #12141d; --surface2: #171a25; --edge: #232735;
+    --ink: #f2ede3; --ink2: #b3aea3; --ink3: #757b8a;
+    --red: #e5484d; --amber: #b8821c; --teal: #1f9a8c; --magenta: #c95bd8;
+    --amber-track: #b8821c30;
+    --beam-pink: #ff5ce1; --beam-amber: #ffb84d; --beam-teal: #3fe0cf; --beam-blue: #6da2ff;
+    --slab: "Alfa Slab One", Georgia, serif;
     --sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
     --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
   }
   * { box-sizing: border-box; margin: 0; }
-  html { scroll-behavior: smooth; }
   body {
-    background:
-      radial-gradient(1100px 500px at 50% -180px, #e5484d14, transparent 65%),
-      var(--bg);
-    color: var(--ink); font: 15.5px/1.6 var(--sans);
+    background: var(--bg); color: var(--ink); font: 15.5px/1.6 var(--sans);
     -webkit-font-smoothing: antialiased; padding: 0 1.1rem 5rem;
+    overflow-x: hidden;
   }
-  .wrap { max-width: 940px; margin: 0 auto; }
+  .wrap { max-width: 940px; margin: 0 auto; position: relative; }
 
-  /* header */
-  header { padding: 3.4rem 0 0; display: flex; flex-direction: column; gap: .9rem; }
-  .brand { display: flex; align-items: center; gap: .85rem; }
-  .donut {
-    width: 40px; height: 40px; border-radius: 50%; flex: 0 0 40px;
-    border: 11px solid var(--red);
-    box-shadow: 0 0 34px #e5484d55, inset 0 0 8px #0006;
+  /* ── the rig: truss + CK5 beams ─────────────────────────── */
+  .truss { position: fixed; top: 0; left: 0; right: 0; height: 10px;
+    background: #05060a; border-bottom: 1px solid #1c2029; z-index: 3;
+    display: flex; justify-content: center; gap: clamp(2rem, 8vw, 7rem);
+    align-items: flex-end; }
+  .fixture { width: 9px; height: 6px; border-radius: 0 0 3px 3px; }
+  .stage { position: absolute; inset: 0 0 auto 0; height: 120vh; overflow: visible;
+    pointer-events: none; z-index: 0; }
+  .beam {
+    position: absolute; top: -30px; left: 50%; width: 190px; height: 115vh;
+    transform-origin: 50% 0;
+    clip-path: polygon(42% 0, 58% 0, 100% 100%, 0 100%);
+    filter: blur(26px); opacity: .16; mix-blend-mode: screen;
   }
-  .brand h1 { font: 600 2.35rem/1 var(--serif); letter-spacing: -.015em; }
-  .tag { color: var(--ink2); max-width: 40rem; }
-  .tag a { color: var(--blue); text-decoration: none; border-bottom: 1px solid #4f8ef74d; }
-  .tag a:hover { border-bottom-color: var(--blue); }
+  @keyframes sway1 { from { transform: translateX(-50%) rotate(var(--a)); }
+    to { transform: translateX(-50%) rotate(calc(var(--a) + 4deg)); } }
+  .beam { animation: sway1 var(--t, 26s) ease-in-out infinite alternate; }
+  @media (prefers-reduced-motion: reduce) { .beam { animation: none; } }
+
+  /* ── header ─────────────────────────────────────────────── */
+  header { padding: 4.6rem 0 0; position: relative; z-index: 1; }
+  .brand { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .donut {
+    width: 46px; height: 46px; border-radius: 50%; flex: 0 0 46px;
+    border: 13px solid var(--red);
+    box-shadow: 0 0 30px #e5484d66, 0 0 70px #e5484d33, inset 0 0 6px #0008;
+  }
+  .brand h1 { font: 400 2.5rem/1.1 var(--slab); letter-spacing: .01em;
+    text-shadow: 0 0 40px #ffb84d33; }
+  .brand h1 .accent { color: var(--red); }
+  .tag { color: var(--ink2); max-width: 42rem; margin-top: .95rem; }
+  .tag a { color: var(--beam-teal); text-decoration: none;
+    border-bottom: 1px solid #3fe0cf55; }
+  .tag a:hover { border-bottom-color: var(--beam-teal); }
 
   /* stat tiles */
-  .stats { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: .8rem; margin-top: 1.9rem; }
+  .stats { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: .85rem;
+    margin-top: 2rem; position: relative; z-index: 1; }
   .tile {
-    background: var(--surface); border: 1px solid var(--edge); border-radius: 16px;
-    padding: 1.05rem 1.25rem 1.15rem;
+    background: var(--surface); border: 1px solid var(--edge); border-radius: 14px;
+    padding: 1rem 1.2rem 1.05rem; position: relative; overflow: hidden;
   }
-  .tile .label { font-size: .78rem; color: var(--ink3); letter-spacing: .02em; }
-  .tile .value { font-weight: 700; font-size: 2rem; line-height: 1.25; margin-top: .15rem; }
-  .tile.hero .value { font-size: 3rem; letter-spacing: -.02em; }
-  .tile .sub { font-size: .8rem; color: var(--ink3); margin-top: .1rem; }
-  .tile .sub b { color: var(--ink2); font-weight: 600; }
+  .tile::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px;
+    background: linear-gradient(90deg, var(--beam-pink), var(--beam-amber),
+      var(--beam-teal), var(--beam-blue)); opacity: .8; }
+  .tile .label { font-size: .76rem; color: var(--ink3); letter-spacing: .02em; }
+  .tile .value { font-weight: 700; font-size: 1.9rem; line-height: 1.3; margin-top: .2rem; }
+  .tile.hero .value { font-size: 2.9rem; letter-spacing: -.02em;
+    text-shadow: 0 0 30px #ffb84d40; }
+  .tile .sub { font-size: .79rem; color: var(--ink3); margin-top: .05rem; }
 
-  /* sections */
-  section { margin-top: 3rem; }
-  .eyebrow {
-    font: 600 .74rem/1 var(--sans); letter-spacing: .14em; text-transform: uppercase;
-    color: var(--red); display: flex; align-items: center; gap: .55rem; margin-bottom: 1rem;
-  }
-  .eyebrow::after { content: ""; height: 1px; flex: 1; background: var(--edge); }
+  /* ── sections ───────────────────────────────────────────── */
+  section { margin-top: 3.1rem; position: relative; z-index: 1; }
+  .eyebrow { display: flex; align-items: center; gap: .7rem; margin-bottom: 1.05rem; }
+  .eyebrow .t { font: 400 1.02rem/1 var(--slab); letter-spacing: .02em; }
+  .eyebrow .mini-donut { width: 15px; height: 15px; border-radius: 50%;
+    border: 4.5px solid var(--red); flex: 0 0 15px; }
+  .eyebrow::after { content: ""; height: 2px; flex: 1; border-radius: 1px;
+    background: linear-gradient(90deg, var(--edge), transparent); }
 
   .card {
     background: var(--surface); border: 1px solid var(--edge); border-radius: 18px;
-    padding: 1.5rem 1.6rem; box-shadow: 0 18px 50px -30px #000c;
+    padding: 1.5rem 1.6rem; box-shadow: 0 22px 60px -34px #000e;
+    position: relative; overflow: hidden;
   }
 
-  /* show header */
   .showline { display: flex; justify-content: space-between; align-items: baseline;
     flex-wrap: wrap; gap: .3rem .9rem; }
-  .venue { font: 600 1.85rem/1.15 var(--serif); letter-spacing: -.01em; }
+  .venue { font: 400 1.65rem/1.25 var(--slab); }
   .showmeta { color: var(--ink3); font-family: var(--mono); font-size: .8rem; }
 
-  /* setlist shape */
-  .sets { margin: 1.25rem 0 1.4rem; border: 1px solid var(--edge); border-radius: 14px;
-    background: var(--surface2); overflow: hidden; }
-  .setrow { display: flex; gap: 1rem; padding: .8rem 1.1rem; align-items: baseline; }
-  .setrow + .setrow { border-top: 1px dashed var(--edge); }
-  .setlabel { flex: 0 0 4.6rem; font: 600 .72rem/1.7 var(--mono); letter-spacing: .12em;
-    color: var(--ink3); }
+  /* setlist shape: each set gets its own light */
+  .sets { margin: 1.3rem 0 1.45rem; display: grid; gap: .55rem; }
+  .setrow { display: flex; gap: 1rem; padding: .7rem 1rem; align-items: baseline;
+    background: var(--surface2); border-radius: 12px; border-left: 4px solid var(--c); }
+  .setrow .setlabel { flex: 0 0 4.6rem; font: 600 .72rem/1.7 var(--mono);
+    letter-spacing: .12em; color: var(--c); }
   .setsongs { font-size: .95rem; }
-  .setsongs .sep { color: var(--red); opacity: .75; padding: 0 .35rem; font-weight: 600; }
+  .setsongs .sep { color: var(--c); opacity: .8; padding: 0 .35rem; font-weight: 700; }
 
   /* prediction table */
   table { width: 100%; border-collapse: collapse; }
   th { text-align: left; font: 600 .7rem/1 var(--sans); letter-spacing: .1em;
     text-transform: uppercase; color: var(--ink3); padding: .45rem .6rem;
     border-bottom: 1px solid var(--edge); }
-  td { padding: .5rem .6rem; border-bottom: 1px solid #1d2330; vertical-align: middle; }
+  td { padding: .5rem .6rem; border-bottom: 1px solid #1a1e2b; vertical-align: middle; }
   tr:last-child td { border-bottom: none; }
   tbody tr { transition: background .12s; }
   tbody tr:hover { background: #ffffff08; }
@@ -97,10 +121,10 @@
   td.song { font-weight: 500; }
   td.meter-cell, th.meter-cell { width: 34%; }
   .meter { display: flex; align-items: center; gap: .6rem; }
-  .meter .track { flex: 1; height: 6px; border-radius: 3px; background: var(--blue-track);
-    overflow: hidden; }
-  .meter .fill { height: 100%; background: var(--blue);
-    border-radius: 0 3px 3px 0; min-width: 3px; }
+  .meter .track { flex: 1; height: 7px; border-radius: 3.5px;
+    background: var(--amber-track); overflow: hidden; }
+  .meter .fill { height: 100%; border-radius: 0 3.5px 3.5px 0; min-width: 3px;
+    background: linear-gradient(90deg, var(--amber), #d99b2b); }
   .meter .val { font: 500 .8rem/1 var(--mono); color: var(--ink2); width: 3.3rem;
     text-align: right; font-variant-numeric: tabular-nums; }
   td.gap, th.gap { text-align: right; width: 4.5rem; }
@@ -111,36 +135,38 @@
     font-family: var(--mono); font-size: .78rem; font-variant-numeric: tabular-nums;
     white-space: nowrap; }
   details { margin-top: .9rem; }
-  summary { cursor: pointer; color: var(--blue); font-size: .88rem; user-select: none;
-    width: fit-content; }
+  summary { cursor: pointer; color: var(--beam-teal); font-size: .88rem;
+    user-select: none; width: fit-content; }
   summary:hover { text-decoration: underline; }
 
-  /* scorecard */
+  /* ── scorecard: hits as donuts ──────────────────────────── */
   .score-row { display: grid; grid-template-columns: 11.5rem 1fr; gap: .4rem 1.4rem;
-    padding: 1.05rem 0; border-bottom: 1px solid #1d2330; align-items: start; }
+    padding: 1.1rem 0; border-bottom: 1px solid #1a1e2b; align-items: start; }
   .score-row:last-child { border-bottom: none; }
   .score-when .d { font: 600 1rem/1.3 var(--sans); }
   .score-when .v { color: var(--ink3); font-size: .82rem; line-height: 1.35; }
-  .hitline { display: flex; align-items: center; gap: .8rem; }
-  .segs { display: flex; gap: 2px; flex: 1; max-width: 21rem; }
-  .seg { height: 10px; flex: 1; background: var(--amber-track); border-radius: 2px; }
-  .seg.on { background: var(--amber); }
-  .hitnum { font: 700 1.05rem/1 var(--sans); font-variant-numeric: tabular-nums; }
-  .hitnum small { color: var(--ink3); font-weight: 500; font-size: .78rem; }
+  .hitline { display: flex; align-items: center; gap: .9rem; flex-wrap: wrap; }
+  .hitnum { font: 400 1.25rem/1 var(--slab); font-variant-numeric: tabular-nums; }
+  .hitnum small { color: var(--ink3); font: 500 .78rem/1 var(--sans); }
+  .donuts { display: flex; gap: 5px; flex-wrap: wrap; }
+  .dn { width: 15px; height: 15px; border-radius: 50%; }
+  .dn.hit { border: 4.5px solid var(--red); box-shadow: 0 0 9px #e5484d55; }
+  .dn.miss { border: 2px solid #333949; }
   .kdetail { color: var(--ink3); font: 500 .76rem/1 var(--mono); }
-  .called { grid-column: 2; color: var(--ink2); font-size: .84rem; }
-  .called b { color: var(--ink3); font-weight: 600; font-size: .74rem;
-    letter-spacing: .08em; text-transform: uppercase; margin-right: .4rem; }
+  .called { grid-column: 2; color: var(--ink2); font-size: .84rem; margin-top: .45rem; }
+  .called b { color: var(--ink3); font-weight: 600; font-size: .72rem;
+    letter-spacing: .1em; text-transform: uppercase; margin-right: .4rem; }
 
   footer { margin-top: 3.6rem; color: var(--ink3); font-size: .82rem;
-    border-top: 1px solid var(--edge); padding-top: 1.4rem; line-height: 1.7; }
-  footer a { color: var(--blue); text-decoration: none; }
+    border-top: 1px solid var(--edge); padding-top: 1.4rem; line-height: 1.7;
+    position: relative; z-index: 1; }
+  footer a { color: var(--beam-teal); text-decoration: none; }
   .loading { color: var(--ink3); font-family: var(--mono); padding: 3rem 0; }
 
   @media (max-width: 640px) {
-    header { padding-top: 2.2rem; }
-    .brand h1 { font-size: 1.8rem; }
-    .donut { width: 32px; height: 32px; flex-basis: 32px; border-width: 9px; }
+    header { padding-top: 3rem; }
+    .brand h1 { font-size: 1.65rem; }
+    .donut { width: 36px; height: 36px; flex-basis: 36px; border-width: 10px; }
     .stats { grid-template-columns: 1fr 1fr; }
     .tile.hero { grid-column: 1 / -1; }
     .card { padding: 1.1rem 1rem; }
@@ -154,9 +180,25 @@
 </style>
 </head>
 <body>
+<div class="truss">
+  <span class="fixture" style="background:var(--beam-pink)"></span>
+  <span class="fixture" style="background:var(--beam-amber)"></span>
+  <span class="fixture" style="background:var(--beam-teal)"></span>
+  <span class="fixture" style="background:var(--beam-blue)"></span>
+  <span class="fixture" style="background:var(--beam-amber)"></span>
+  <span class="fixture" style="background:var(--beam-pink)"></span>
+</div>
+<div class="stage" aria-hidden="true">
+  <div class="beam" style="--a:-26deg; --t:31s; background:linear-gradient(var(--beam-pink), transparent 78%)"></div>
+  <div class="beam" style="--a:-12deg; --t:24s; background:linear-gradient(var(--beam-amber), transparent 75%)"></div>
+  <div class="beam" style="--a:1deg;  --t:28s; background:linear-gradient(var(--beam-teal), transparent 78%)"></div>
+  <div class="beam" style="--a:13deg; --t:22s; background:linear-gradient(var(--beam-blue), transparent 75%)"></div>
+  <div class="beam" style="--a:27deg; --t:33s; background:linear-gradient(var(--beam-pink), transparent 78%)"></div>
+</div>
 <div class="wrap">
   <header>
-    <div class="brand"><div class="donut"></div><h1>phish-predict</h1></div>
+    <div class="brand"><div class="donut"></div>
+      <h1>phish<span class="accent">-</span>predict</h1></div>
     <p class="tag">A model that guesses the setlist before Phish plays it, then grades
     itself in public the morning after. Trained on 40 years of shows; wrong in
     interesting ways. <a href="https://github.com/trevorspires/phish-predict">Code&nbsp;&amp;&nbsp;methodology</a></p>
@@ -182,7 +224,6 @@ const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;");
 
 fetch("data.json").then(r => r.json()).then(D => {
   const best = D.history.reduce((m, h) => h.h20 > (m?.h20 ?? -1) ? h : m, null);
-  const graded = D.history.length;
   document.getElementById("stats").innerHTML = `
     <div class="tile hero">
       <div class="label">backtest recall@20 · frozen walk-forward</div>
@@ -191,19 +232,20 @@ fetch("data.json").then(r => r.json()).then(D => {
     </div>
     <div class="tile">
       <div class="label">shows graded live</div>
-      <div class="value">${graded}</div>
+      <div class="value">${D.history.length}</div>
       <div class="sub">summer 2026 tour</div>
     </div>
     <div class="tile">
       <div class="label">best night</div>
-      <div class="value">${best ? best.h20 + "<small style='font-size:1.1rem;color:var(--ink3)'>/20</small>" : "—"}</div>
+      <div class="value">${best ? best.h20 + "<small style='font-size:1rem;color:var(--ink3)'>/20</small>" : "—"}</div>
       <div class="sub">${best ? esc(best.venue || fmtDate(best.date)) : "first grade pending"}</div>
     </div>`;
 
   const N = D.next, S = N.setlist || {};
   const maxP = Math.max(...N.top.map(r => r.p), 0.001);
+  const SETC = { "SET 1": "var(--amber)", "SET 2": "var(--teal)", "ENCORE": "var(--magenta)" };
   const setRow = (label, songs) => songs && songs.length ?
-    `<div class="setrow"><span class="setlabel">${label}</span>
+    `<div class="setrow" style="--c:${SETC[label]}"><span class="setlabel">${label}</span>
      <span class="setsongs">${songs.map(esc).join('<span class="sep">→</span>')}</span></div>` : "";
   const row = r => `
     <tr>
@@ -224,19 +266,20 @@ fetch("data.json").then(r => r.json()).then(D => {
         <div class="v">${esc(h.venue || "")}</div></div>
       <div>
         <div class="hitline">
-          <span class="hitnum">${h.h20}<small>/20 called</small></span>
-          <div class="segs" title="${h.h20} of the model's top 20 were played">
-            ${Array.from({length: 20}, (_, i) => `<span class="seg${i < h.h20 ? " on" : ""}"></span>`).join("")}
+          <span class="hitnum">${h.h20}<small> /20</small></span>
+          <div class="donuts" title="${h.h20} of the model's top 20 were played — one donut per hit">
+            ${Array.from({length: 20}, (_, i) =>
+              `<span class="dn ${i < h.h20 ? "hit" : "miss"}"></span>`).join("")}
           </div>
           <span class="kdetail">@10: ${h.h10} · @30: ${h.h30}${h.b20 != null ? " · baseline: " + h.b20 : ""}</span>
         </div>
-        <div class="called" style="margin-top:.45rem"><b>Called</b>${h.called.map(esc).join(", ") || "none in the top 20"}</div>
+        <div class="called"><b>Called</b>${h.called.map(esc).join(", ") || "none in the top 20"}</div>
       </div>
     </div>`).join("");
 
   document.getElementById("app").innerHTML = `
     <section>
-      <div class="eyebrow">Latest prediction</div>
+      <div class="eyebrow"><span class="mini-donut"></span><span class="t">Latest prediction</span></div>
       <div class="card">
         <div class="showline">
           <span class="venue">${esc(N.venue || "TBA")}</span>
@@ -255,7 +298,7 @@ fetch("data.json").then(r => r.json()).then(D => {
       </div>
     </section>
     <section>
-      <div class="eyebrow">Scorecard — every show, graded</div>
+      <div class="eyebrow"><span class="mini-donut"></span><span class="t">The scorecard</span></div>
       <div class="card">
         ${histRows || "<p class='loading'>first scorecard lands after the next show</p>"}
       </div>
