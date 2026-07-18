@@ -38,9 +38,14 @@ def notify(msg):
 
 
 def fetch_setlist(url):
-    """Ordered [(set_label, title)] parsed from the phish.net setlist page."""
+    """Ordered [(set_label, title)] fetched from a phish.net setlist page."""
     req = urllib.request.Request(url, headers={"User-Agent": UA})
     h = urllib.request.urlopen(req, timeout=30).read().decode("utf-8", "replace")
+    return parse_setlist(h)
+
+
+def parse_setlist(h):
+    """Ordered [(set_label, title)] parsed from phish.net setlist page HTML."""
     m = re.search(r'class=.setlist-body.(.*?)(?:</p>\s*)?</div>', h, re.S)
     if not m:
         return []

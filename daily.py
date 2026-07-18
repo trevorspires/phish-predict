@@ -18,6 +18,7 @@ import os
 import re
 import subprocess
 import sys
+import urllib.parse
 import urllib.request
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -116,13 +117,13 @@ def supplement_recent():
     venues = json.load(open(os.path.join(ROOT, "data", "raw", "venues.json")))
     norm = watch_live.norm
 
-    def resolve_venue(url_slug):
-        target = norm(url_slug)
+    def resolve_venue(name):
+        target = norm(name)
         for v in venues:
             for n in [v["name"]] + (v.get("other_names") or []):
-                if n and norm(n) in target:
+                if n and (norm(n) in target or target in norm(n)):
                     return v["name"]
-        return url_slug.replace("-", " ").title()
+        return name   # phish.net's own venue name — already clean
 
     d = datetime.date.fromisoformat(last["date"]) + datetime.timedelta(days=1)
     today = datetime.date.today()
@@ -132,7 +133,9 @@ def supplement_recent():
         try:
             req = urllib.request.Request(f"https://phish.net/setlists/?d={date}",
                                          headers={"User-Agent": UA})
-            final_url = urllib.request.urlopen(req, timeout=30).geturl()
+            resp = urllib.request.urlopen(req, timeout=30)
+            final_url = resp.geturl()
+            page = resp.read().decode("utf-8", "replace")
         except urllib.error.HTTPError as e:
             if e.code != 404:      # 404 = no show that night
                 print(f"supplement: {date} fetch failed: {e}", flush=True)
@@ -144,13 +147,17 @@ def supplement_recent():
         stamp = f"-{dd.strftime('%B').lower()}-{dd.day}-{dd.year}-"
         if stamp not in final_url:
             continue
-        songs = watch_live.fetch_setlist(final_url)
+        songs = watch_live.parse_setlist(page)
         if not songs or not looks_complete(songs):
             if songs:
                 print(f"supplement: {date} setlist looks partial, waiting", flush=True)
             continue
-        m = re.search(rf"setlists/phish{stamp}([a-z0-9-]+)\.html", final_url)
-        venue = resolve_venue(m.group(1) if m else "")
+        m = re.search(r'href="/venue/\d+/([^"]+)"', page)
+        pn_venue = urllib.parse.unquote(m.group(1)).replace("_", " ").strip() if m else ""
+        if not pn_venue:
+            m = re.search(rf"setlists/phish{stamp}([a-z0-9-]+)\.html", final_url)
+            pn_venue = (m.group(1) if m else "").replace("-", " ").title()
+        venue = resolve_venue(pn_venue)
         with open(shows_csv, "a", newline="") as f:
             csv.writer(f).writerow([date, last["era"], last["tour"], venue,
                                     "", "", "", "", "", "", "supplemented", len(songs)])

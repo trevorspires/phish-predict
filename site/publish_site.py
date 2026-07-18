@@ -19,6 +19,13 @@ BUCKET = "phish-trevorspires-com-site"
 DIST = "EZ9RORMFAP452"
 
 
+def clean_venue(v):
+    """Trim the city/state/country tail that supplement's slug fallback leaves
+    ("Enmarket Arena Savannah Ga Usa" -> "Enmarket Arena")."""
+    v = re.sub(r"\s+\w+\s+[A-Z][a-z]\s+Usa$", "", v or "")
+    return re.sub(r"\s+[A-Z][a-z]\s+Usa$", "", v)
+
+
 def build_data():
     pdir = os.path.join(ROOT, "predictions")
     dates = sorted(f[:-5] for f in os.listdir(pdir)
@@ -30,7 +37,7 @@ def build_data():
     ranked = p["rankings"]["model"] if "rankings" in p else p["ranked"]
     nxt = {
         "date": latest,
-        "venue": p.get("venue", ""),
+        "venue": clean_venue(p.get("venue", "")),
         "history_through": p.get("history_through", ""),
         "setlist": p.get("setlist", {}),
         "top": [{"rank": r["rank"], "title": r["title"], "p": r["p"],
@@ -44,7 +51,7 @@ def build_data():
         for r in csv.DictReader(open(spath)):
             pr = preds.get(r["date"], {})
             history.append({
-                "date": r["date"], "venue": pr.get("venue", ""),
+                "date": r["date"], "venue": clean_venue(pr.get("venue", "")),
                 "n_songs": int(r["n_songs"]),
                 "h10": int(r["model_h10"] or 0), "h20": int(r["model_h20"] or 0),
                 "h30": int(r["model_h30"] or 0),

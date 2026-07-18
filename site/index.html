@@ -3,81 +3,164 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>phish-predict 🎸 — tonight's setlist, guessed in advance</title>
+<title>phish-predict — tonight's setlist, guessed in advance</title>
 <meta name="description" content="A model that predicts Phish setlists before every show and grades itself in public the morning after.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0e1116; --card: #171c24; --edge: #232b37; --ink: #e8ecf1;
-    --dim: #97a3b0; --red: #e5484d; --blue: #4f8ef7; --gold: #f5c542;
-    --green: #46a758; --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+    --bg: #0d0f14; --surface: #151921; --surface2: #1b202b; --edge: #262d3a;
+    --ink: #edf0f4; --ink2: #a8b1bd; --ink3: #6e7887;
+    --red: #e5484d; --blue: #4f8ef7; --amber: #b8821c; --amber-track: #b8821c33;
+    --blue-track: #4f8ef72e; --green: #46a758;
+    --serif: "Fraunces", Georgia, serif;
+    --sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
   }
   * { box-sizing: border-box; margin: 0; }
+  html { scroll-behavior: smooth; }
   body {
-    background: var(--bg); color: var(--ink);
-    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    padding: 2rem 1rem 4rem;
+    background:
+      radial-gradient(1100px 500px at 50% -180px, #e5484d14, transparent 65%),
+      var(--bg);
+    color: var(--ink); font: 15.5px/1.6 var(--sans);
+    -webkit-font-smoothing: antialiased; padding: 0 1.1rem 5rem;
   }
-  .wrap { max-width: 880px; margin: 0 auto; }
-  header h1 { font-size: 1.9rem; letter-spacing: -.02em; }
-  header h1 .donut { color: var(--red); }
-  header p.tag { color: var(--dim); margin-top: .3rem; }
-  header a { color: var(--blue); text-decoration: none; }
-  .badges { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: .8rem; }
-  .badge {
-    font-family: var(--mono); font-size: .78rem; color: var(--dim);
-    border: 1px solid var(--edge); border-radius: 999px; padding: .18rem .7rem;
+  .wrap { max-width: 940px; margin: 0 auto; }
+
+  /* header */
+  header { padding: 3.4rem 0 0; display: flex; flex-direction: column; gap: .9rem; }
+  .brand { display: flex; align-items: center; gap: .85rem; }
+  .donut {
+    width: 40px; height: 40px; border-radius: 50%; flex: 0 0 40px;
+    border: 11px solid var(--red);
+    box-shadow: 0 0 34px #e5484d55, inset 0 0 8px #0006;
   }
-  .badge b { color: var(--gold); font-weight: 600; }
-  section { margin-top: 2.2rem; }
-  h2 { font-size: 1.15rem; margin-bottom: .8rem; }
-  h2 .em { color: var(--red); }
+  .brand h1 { font: 600 2.35rem/1 var(--serif); letter-spacing: -.015em; }
+  .tag { color: var(--ink2); max-width: 40rem; }
+  .tag a { color: var(--blue); text-decoration: none; border-bottom: 1px solid #4f8ef74d; }
+  .tag a:hover { border-bottom-color: var(--blue); }
+
+  /* stat tiles */
+  .stats { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: .8rem; margin-top: 1.9rem; }
+  .tile {
+    background: var(--surface); border: 1px solid var(--edge); border-radius: 16px;
+    padding: 1.05rem 1.25rem 1.15rem;
+  }
+  .tile .label { font-size: .78rem; color: var(--ink3); letter-spacing: .02em; }
+  .tile .value { font-weight: 700; font-size: 2rem; line-height: 1.25; margin-top: .15rem; }
+  .tile.hero .value { font-size: 3rem; letter-spacing: -.02em; }
+  .tile .sub { font-size: .8rem; color: var(--ink3); margin-top: .1rem; }
+  .tile .sub b { color: var(--ink2); font-weight: 600; }
+
+  /* sections */
+  section { margin-top: 3rem; }
+  .eyebrow {
+    font: 600 .74rem/1 var(--sans); letter-spacing: .14em; text-transform: uppercase;
+    color: var(--red); display: flex; align-items: center; gap: .55rem; margin-bottom: 1rem;
+  }
+  .eyebrow::after { content: ""; height: 1px; flex: 1; background: var(--edge); }
+
   .card {
-    background: var(--card); border: 1px solid var(--edge);
-    border-radius: 14px; padding: 1.2rem 1.3rem;
+    background: var(--surface); border: 1px solid var(--edge); border-radius: 18px;
+    padding: 1.5rem 1.6rem; box-shadow: 0 18px 50px -30px #000c;
   }
-  .showline { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .4rem;
-    align-items: baseline; margin-bottom: .9rem; }
-  .showline .venue { font-size: 1.25rem; font-weight: 650; }
-  .showline .date { color: var(--dim); font-family: var(--mono); font-size: .9rem; }
-  .sets { display: grid; gap: .55rem; margin-bottom: 1.1rem; }
-  .setrow { display: flex; gap: .7rem; align-items: baseline; }
-  .setlabel { flex: 0 0 4.2rem; font-family: var(--mono); font-size: .78rem;
-    color: var(--gold); letter-spacing: .06em; }
-  .setsongs { color: var(--ink); }
-  .setsongs .sep { color: var(--red); padding: 0 .15rem; }
-  details summary { cursor: pointer; color: var(--blue); font-size: .92rem;
-    user-select: none; }
-  table { width: 100%; border-collapse: collapse; margin-top: .8rem;
-    font-size: .92rem; }
-  th { text-align: left; color: var(--dim); font-weight: 500; font-size: .78rem;
-    text-transform: uppercase; letter-spacing: .06em; padding: .3rem .5rem;
+
+  /* show header */
+  .showline { display: flex; justify-content: space-between; align-items: baseline;
+    flex-wrap: wrap; gap: .3rem .9rem; }
+  .venue { font: 600 1.85rem/1.15 var(--serif); letter-spacing: -.01em; }
+  .showmeta { color: var(--ink3); font-family: var(--mono); font-size: .8rem; }
+
+  /* setlist shape */
+  .sets { margin: 1.25rem 0 1.4rem; border: 1px solid var(--edge); border-radius: 14px;
+    background: var(--surface2); overflow: hidden; }
+  .setrow { display: flex; gap: 1rem; padding: .8rem 1.1rem; align-items: baseline; }
+  .setrow + .setrow { border-top: 1px dashed var(--edge); }
+  .setlabel { flex: 0 0 4.6rem; font: 600 .72rem/1.7 var(--mono); letter-spacing: .12em;
+    color: var(--ink3); }
+  .setsongs { font-size: .95rem; }
+  .setsongs .sep { color: var(--red); opacity: .75; padding: 0 .35rem; font-weight: 600; }
+
+  /* prediction table */
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; font: 600 .7rem/1 var(--sans); letter-spacing: .1em;
+    text-transform: uppercase; color: var(--ink3); padding: .45rem .6rem;
     border-bottom: 1px solid var(--edge); }
-  td { padding: .38rem .5rem; border-bottom: 1px solid var(--edge); }
-  td.num, th.num { text-align: right; font-family: var(--mono); font-size: .85rem; }
+  td { padding: .5rem .6rem; border-bottom: 1px solid #1d2330; vertical-align: middle; }
   tr:last-child td { border-bottom: none; }
-  .tablewrap { overflow-x: auto; }
-  .hits { font-family: var(--mono); }
-  .hit-good { color: var(--green); font-weight: 650; }
-  .hit-ok { color: var(--gold); }
-  .hit-meh { color: var(--dim); }
-  .called { color: var(--dim); font-size: .85rem; }
-  .gapchip { font-family: var(--mono); font-size: .78rem; color: var(--dim); }
-  .gapchip.due { color: var(--red); font-weight: 650; }
-  footer { margin-top: 3rem; color: var(--dim); font-size: .84rem;
-    border-top: 1px solid var(--edge); padding-top: 1.2rem; }
+  tbody tr { transition: background .12s; }
+  tbody tr:hover { background: #ffffff08; }
+  td.rank, th.rank { width: 2.2rem; text-align: right; color: var(--ink3);
+    font-family: var(--mono); font-size: .8rem; font-variant-numeric: tabular-nums; }
+  td.song { font-weight: 500; }
+  td.meter-cell, th.meter-cell { width: 34%; }
+  .meter { display: flex; align-items: center; gap: .6rem; }
+  .meter .track { flex: 1; height: 6px; border-radius: 3px; background: var(--blue-track);
+    overflow: hidden; }
+  .meter .fill { height: 100%; background: var(--blue);
+    border-radius: 0 3px 3px 0; min-width: 3px; }
+  .meter .val { font: 500 .8rem/1 var(--mono); color: var(--ink2); width: 3.3rem;
+    text-align: right; font-variant-numeric: tabular-nums; }
+  td.gap, th.gap { text-align: right; width: 4.5rem; }
+  .gapchip { font: 500 .78rem/1.5 var(--mono); color: var(--ink3);
+    font-variant-numeric: tabular-nums; }
+  .gapchip.due { color: var(--red); font-weight: 700; }
+  td.last, th.last { text-align: right; width: 7rem; color: var(--ink3);
+    font-family: var(--mono); font-size: .78rem; font-variant-numeric: tabular-nums;
+    white-space: nowrap; }
+  details { margin-top: .9rem; }
+  summary { cursor: pointer; color: var(--blue); font-size: .88rem; user-select: none;
+    width: fit-content; }
+  summary:hover { text-decoration: underline; }
+
+  /* scorecard */
+  .score-row { display: grid; grid-template-columns: 11.5rem 1fr; gap: .4rem 1.4rem;
+    padding: 1.05rem 0; border-bottom: 1px solid #1d2330; align-items: start; }
+  .score-row:last-child { border-bottom: none; }
+  .score-when .d { font: 600 1rem/1.3 var(--sans); }
+  .score-when .v { color: var(--ink3); font-size: .82rem; line-height: 1.35; }
+  .hitline { display: flex; align-items: center; gap: .8rem; }
+  .segs { display: flex; gap: 2px; flex: 1; max-width: 21rem; }
+  .seg { height: 10px; flex: 1; background: var(--amber-track); border-radius: 2px; }
+  .seg.on { background: var(--amber); }
+  .hitnum { font: 700 1.05rem/1 var(--sans); font-variant-numeric: tabular-nums; }
+  .hitnum small { color: var(--ink3); font-weight: 500; font-size: .78rem; }
+  .kdetail { color: var(--ink3); font: 500 .76rem/1 var(--mono); }
+  .called { grid-column: 2; color: var(--ink2); font-size: .84rem; }
+  .called b { color: var(--ink3); font-weight: 600; font-size: .74rem;
+    letter-spacing: .08em; text-transform: uppercase; margin-right: .4rem; }
+
+  footer { margin-top: 3.6rem; color: var(--ink3); font-size: .82rem;
+    border-top: 1px solid var(--edge); padding-top: 1.4rem; line-height: 1.7; }
   footer a { color: var(--blue); text-decoration: none; }
-  .loading { color: var(--dim); font-family: var(--mono); padding: 2rem 0; }
-  @media (max-width: 560px) { body { padding: 1.2rem .7rem 3rem; }
-    .setrow { flex-direction: column; gap: .1rem; } }
+  .loading { color: var(--ink3); font-family: var(--mono); padding: 3rem 0; }
+
+  @media (max-width: 640px) {
+    header { padding-top: 2.2rem; }
+    .brand h1 { font-size: 1.8rem; }
+    .donut { width: 32px; height: 32px; flex-basis: 32px; border-width: 9px; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .tile.hero { grid-column: 1 / -1; }
+    .card { padding: 1.1rem 1rem; }
+    td.last, th.last { display: none; }
+    td.meter-cell, th.meter-cell { width: 30%; }
+    .meter .val { width: 2.9rem; }
+    .setrow { flex-direction: column; gap: .15rem; }
+    .score-row { grid-template-columns: 1fr; }
+    .called { grid-column: 1; }
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <h1><span class="donut">●</span> phish-predict</h1>
-    <p class="tag">A model that guesses the setlist before Phish plays it — and grades
-    itself in public the morning after. <a href="https://github.com/trevorspires/phish-predict">Code + methodology →</a></p>
-    <div class="badges" id="badges"></div>
+    <div class="brand"><div class="donut"></div><h1>phish-predict</h1></div>
+    <p class="tag">A model that guesses the setlist before Phish plays it, then grades
+    itself in public the morning after. Trained on 40 years of shows; wrong in
+    interesting ways. <a href="https://github.com/trevorspires/phish-predict">Code&nbsp;&amp;&nbsp;methodology</a></p>
+    <div class="stats" id="stats"></div>
   </header>
 
   <div id="app"><p class="loading">loading predictions…</p></div>
@@ -85,7 +168,7 @@
   <footer>
     <p><b>Data courtesy of Phish.net and The Mockingbird Foundation.</b>
     Audio-archive metadata via <a href="https://phish.in">phish.in</a>.
-    Free &amp; non-commercial; not affiliated with Phish, Phish.net, The Mockingbird
+    Free and non-commercial; not affiliated with Phish, Phish.net, The Mockingbird
     Foundation, or phish.in. Predictions are generated before each show from
     setlist history only — no insider soundcheck intel, we promise.
     <a href="https://github.com/trevorspires/phish-predict">Source on GitHub</a>.</p>
@@ -95,64 +178,87 @@
 <script>
 const fmtDate = d => new Date(d + "T12:00:00").toLocaleDateString("en-US",
   { weekday: "short", month: "short", day: "numeric", year: "numeric" });
-const hitClass = (h, of) => h / of >= .4 ? "hit-good" : h / of >= .25 ? "hit-ok" : "hit-meh";
+const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;");
 
 fetch("data.json").then(r => r.json()).then(D => {
-  document.getElementById("badges").innerHTML =
-    `<span class="badge">backtest recall@20 <b>${D.backtest.r20.toFixed(3)}</b></span>` +
-    `<span class="badge">${D.backtest.window}</span>` +
-    `<span class="badge">updated ${new Date(D.updated).toLocaleString()}</span>`;
+  const best = D.history.reduce((m, h) => h.h20 > (m?.h20 ?? -1) ? h : m, null);
+  const graded = D.history.length;
+  document.getElementById("stats").innerHTML = `
+    <div class="tile hero">
+      <div class="label">backtest recall@20 · frozen walk-forward</div>
+      <div class="value">${D.backtest.r20.toFixed(3)}</div>
+      <div class="sub">${esc(D.backtest.window)} · baseline 0.273</div>
+    </div>
+    <div class="tile">
+      <div class="label">shows graded live</div>
+      <div class="value">${graded}</div>
+      <div class="sub">summer 2026 tour</div>
+    </div>
+    <div class="tile">
+      <div class="label">best night</div>
+      <div class="value">${best ? best.h20 + "<small style='font-size:1.1rem;color:var(--ink3)'>/20</small>" : "—"}</div>
+      <div class="sub">${best ? esc(best.venue || fmtDate(best.date)) : "first grade pending"}</div>
+    </div>`;
 
   const N = D.next, S = N.setlist || {};
+  const maxP = Math.max(...N.top.map(r => r.p), 0.001);
   const setRow = (label, songs) => songs && songs.length ?
     `<div class="setrow"><span class="setlabel">${label}</span>
-     <span class="setsongs">${songs.map(s => `<span>${s}</span>`)
-       .join('<span class="sep"> → </span>')}</span></div>` : "";
+     <span class="setsongs">${songs.map(esc).join('<span class="sep">→</span>')}</span></div>` : "";
+  const row = r => `
+    <tr>
+      <td class="rank">${r.rank}</td>
+      <td class="song">${esc(r.title)}</td>
+      <td class="meter-cell"><div class="meter" title="P(played tonight) = ${(r.p * 100).toFixed(1)}%">
+        <div class="track"><div class="fill" style="width:${(r.p / maxP * 100).toFixed(1)}%"></div></div>
+        <span class="val">${(r.p * 100).toFixed(1)}%</span>
+      </div></td>
+      <td class="gap"><span class="gapchip${r.gap >= 40 ? " due" : ""}"
+        title="${r.gap} shows since last played${r.gap >= 40 ? " — bustout watch" : ""}">${r.gap >= 40 ? "🔥 " : ""}${r.gap}</span></td>
+      <td class="last">${r.last_played}</td>
+    </tr>`;
 
-  const topRows = N.top.slice(0, 20).map(r =>
-    `<tr><td class="num">${r.rank}</td><td>${r.title}</td>
-     <td class="num">${(r.p * 100).toFixed(1)}%</td>
-     <td class="num"><span class="gapchip${r.gap >= 40 ? " due" : ""}">${r.gap}</span></td>
-     <td class="num">${r.last_played}</td></tr>`).join("");
-  const moreRows = N.top.slice(20).map(r =>
-    `<tr><td class="num">${r.rank}</td><td>${r.title}</td>
-     <td class="num">${(r.p * 100).toFixed(1)}%</td>
-     <td class="num"><span class="gapchip${r.gap >= 40 ? " due" : ""}">${r.gap}</span></td>
-     <td class="num">${r.last_played}</td></tr>`).join("");
-
-  const histRows = D.history.map(h =>
-    `<tr><td>${fmtDate(h.date)}</td><td>${h.venue || ""}</td>
-     <td class="num hits"><span class="${hitClass(h.h20, 20)}">${h.h20}</span>/20</td>
-     <td class="num hits">${h.h10}/10 · ${h.h30}/30</td>
-     <td class="called">${h.called.join(", ") || "—"}</td></tr>`).join("");
+  const histRows = D.history.map(h => `
+    <div class="score-row">
+      <div class="score-when"><div class="d">${fmtDate(h.date)}</div>
+        <div class="v">${esc(h.venue || "")}</div></div>
+      <div>
+        <div class="hitline">
+          <span class="hitnum">${h.h20}<small>/20 called</small></span>
+          <div class="segs" title="${h.h20} of the model's top 20 were played">
+            ${Array.from({length: 20}, (_, i) => `<span class="seg${i < h.h20 ? " on" : ""}"></span>`).join("")}
+          </div>
+          <span class="kdetail">@10: ${h.h10} · @30: ${h.h30}${h.b20 != null ? " · baseline: " + h.b20 : ""}</span>
+        </div>
+        <div class="called" style="margin-top:.45rem"><b>Called</b>${h.called.map(esc).join(", ") || "none in the top 20"}</div>
+      </div>
+    </div>`).join("");
 
   document.getElementById("app").innerHTML = `
     <section>
-      <h2><span class="em">▸</span> Latest prediction</h2>
+      <div class="eyebrow">Latest prediction</div>
       <div class="card">
         <div class="showline">
-          <span class="venue">${N.venue || "TBA"}</span>
-          <span class="date">${fmtDate(N.date)} · history through ${N.history_through}</span>
+          <span class="venue">${esc(N.venue || "TBA")}</span>
+          <span class="showmeta">${fmtDate(N.date)} · history through ${N.history_through}</span>
         </div>
         <div class="sets">
           ${setRow("SET 1", S.s1)}${setRow("SET 2", S.s2)}${setRow("ENCORE", S.enc)}
         </div>
-        <div class="tablewrap"><table>
-          <tr><th class="num">#</th><th>song</th><th class="num">p</th>
-              <th class="num">gap</th><th class="num">last played</th></tr>
-          ${topRows}
-        </table></div>
-        ${moreRows ? `<details><summary>show picks 21–40</summary>
-          <div class="tablewrap"><table>${moreRows}</table></div></details>` : ""}
+        <table>
+          <thead><tr><th class="rank">#</th><th>Song</th><th class="meter-cell">P(played tonight)</th>
+          <th class="gap">Gap</th><th class="last">Last played</th></tr></thead>
+          <tbody>${N.top.slice(0, 20).map(row).join("")}</tbody>
+        </table>
+        ${N.top.length > 20 ? `<details><summary>Show picks 21–40</summary>
+          <table><tbody>${N.top.slice(20).map(row).join("")}</tbody></table></details>` : ""}
       </div>
     </section>
     <section>
-      <h2><span class="em">▸</span> Scorecard — every show, graded</h2>
-      <div class="card tablewrap"><table>
-        <tr><th>show</th><th>venue</th><th class="num">top-20 hits</th>
-            <th class="num">@10 · @30</th><th>called it</th></tr>
-        ${histRows || "<tr><td colspan=5 class='called'>first scorecard lands after the next show</td></tr>"}
-      </table></div>
+      <div class="eyebrow">Scorecard — every show, graded</div>
+      <div class="card">
+        ${histRows || "<p class='loading'>first scorecard lands after the next show</p>"}
+      </div>
     </section>`;
 }).catch(e => {
   document.getElementById("app").innerHTML =
