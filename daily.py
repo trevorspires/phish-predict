@@ -25,8 +25,9 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, ROOT)
 import baseline
 
-# any executable taking the message as $1; falls back to stdout if absent
-NOTIFY = os.environ.get("PHISH_NOTIFY", os.path.expanduser("~/.claude/lib/notify.sh"))
+# notifications retired in favor of the site (phishpredict.com); set
+# PHISH_NOTIFY to an executable taking the message as $1 to re-enable
+NOTIFY = os.environ.get("PHISH_NOTIFY", "")
 SCORES = os.path.join(ROOT, "predictions", "scores.csv")
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"
 UV = os.path.expanduser("~/.local/bin/uv")
